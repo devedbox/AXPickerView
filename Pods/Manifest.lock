@@ -1,0 +1,18 @@
+PODS:
+  - AXExtensions (1.0.0)
+  - AXImagePickerController (1.0.0):
+    - AXExtensions
+    - AXPracticalHUD
+  - AXPracticalHUD (1.0.3)
+
+DEPENDENCIES:
+  - AXExtensions
+  - AXImagePickerController
+  - AXPracticalHUD
+
+SPEC CHECKSUMS:
+  AXExtensions: 50fcb0126698eb2074f85dd3f8672345fef398a9
+  AXImagePickerController: 23a9c4a2adbcd1e910f53b23426de38122709e77
+  AXPracticalHUD: afcd85f9d569060b2b1d4b08a7d89bfc79b18a71
+
+COCOAPODS: 0.39.0

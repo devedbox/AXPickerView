@@ -13,6 +13,12 @@
 		01AB000B1BFF3A6D00EEDF8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01AB00091BFF3A6D00EEDF8C /* Main.storyboard */; };
 		01AB000D1BFF3A6D00EEDF8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01AB000C1BFF3A6D00EEDF8C /* Assets.xcassets */; };
 		01AB00101BFF3A6D00EEDF8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01AB000E1BFF3A6D00EEDF8C /* LaunchScreen.storyboard */; };
+		01AB00231BFF3AF400EEDF8C /* AXImagePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB00191BFF3AF300EEDF8C /* AXImagePickerCell.m */; };
+		01AB00241BFF3AF400EEDF8C /* AXPickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB001C1BFF3AF300EEDF8C /* AXPickerCollectionViewCell.m */; };
+		01AB00251BFF3AF400EEDF8C /* AXPickerCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB001E1BFF3AF300EEDF8C /* AXPickerCollectionViewFlowLayout.m */; };
+		01AB00261BFF3AF400EEDF8C /* AXPickerContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB00201BFF3AF300EEDF8C /* AXPickerContentView.m */; };
+		01AB00271BFF3AF400EEDF8C /* AXPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB00221BFF3AF300EEDF8C /* AXPickerView.m */; };
+		D362E12481D172C96AE67B74 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 386716273A15EB03A34D4523 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +31,20 @@
 		01AB000C1BFF3A6D00EEDF8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01AB000F1BFF3A6D00EEDF8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		01AB00111BFF3A6D00EEDF8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01AB00181BFF3AF300EEDF8C /* AXImagePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXImagePickerCell.h; sourceTree = "<group>"; };
+		01AB00191BFF3AF300EEDF8C /* AXImagePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXImagePickerCell.m; sourceTree = "<group>"; };
+		01AB001B1BFF3AF300EEDF8C /* AXPickerCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPickerCollectionViewCell.h; sourceTree = "<group>"; };
+		01AB001C1BFF3AF300EEDF8C /* AXPickerCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXPickerCollectionViewCell.m; sourceTree = "<group>"; };
+		01AB001D1BFF3AF300EEDF8C /* AXPickerCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPickerCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		01AB001E1BFF3AF300EEDF8C /* AXPickerCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXPickerCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		01AB001F1BFF3AF300EEDF8C /* AXPickerContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPickerContentView.h; sourceTree = "<group>"; };
+		01AB00201BFF3AF300EEDF8C /* AXPickerContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXPickerContentView.m; sourceTree = "<group>"; };
+		01AB00211BFF3AF300EEDF8C /* AXPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPickerView.h; sourceTree = "<group>"; };
+		01AB00221BFF3AF300EEDF8C /* AXPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXPickerView.m; sourceTree = "<group>"; };
 		01ABFFFD1BFF3A6D00EEDF8C /* AXPickerView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AXPickerView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2933C407155FDFB56C435F73 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		386716273A15EB03A34D4523 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E214C935F0082BB6510A659 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D362E12481D172C96AE67B74 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,11 +67,38 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		01AB00171BFF3AF300EEDF8C /* AXPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				01AB001A1BFF3AF300EEDF8C /* AXPickerContentView */,
+				01AB00181BFF3AF300EEDF8C /* AXImagePickerCell.h */,
+				01AB00191BFF3AF300EEDF8C /* AXImagePickerCell.m */,
+				01AB00211BFF3AF300EEDF8C /* AXPickerView.h */,
+				01AB00221BFF3AF300EEDF8C /* AXPickerView.m */,
+			);
+			path = AXPickerView;
+			sourceTree = "<group>";
+		};
+		01AB001A1BFF3AF300EEDF8C /* AXPickerContentView */ = {
+			isa = PBXGroup;
+			children = (
+				01AB001B1BFF3AF300EEDF8C /* AXPickerCollectionViewCell.h */,
+				01AB001C1BFF3AF300EEDF8C /* AXPickerCollectionViewCell.m */,
+				01AB001D1BFF3AF300EEDF8C /* AXPickerCollectionViewFlowLayout.h */,
+				01AB001E1BFF3AF300EEDF8C /* AXPickerCollectionViewFlowLayout.m */,
+				01AB001F1BFF3AF300EEDF8C /* AXPickerContentView.h */,
+				01AB00201BFF3AF300EEDF8C /* AXPickerContentView.m */,
+			);
+			path = AXPickerContentView;
+			sourceTree = "<group>";
+		};
 		01ABFFF41BFF3A6D00EEDF8C = {
 			isa = PBXGroup;
 			children = (
 				01ABFFFF1BFF3A6D00EEDF8C /* AXPickerView */,
 				01ABFFFE1BFF3A6D00EEDF8C /* Products */,
+				970B38AB018F89471EE68B95 /* Pods */,
+				8DEAE7EA47AAF329D26E2E4A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -70,6 +117,7 @@
 				01AB00041BFF3A6D00EEDF8C /* AppDelegate.m */,
 				01AB00061BFF3A6D00EEDF8C /* ViewController.h */,
 				01AB00071BFF3A6D00EEDF8C /* ViewController.m */,
+				01AB00171BFF3AF300EEDF8C /* AXPickerView */,
 				01AB00091BFF3A6D00EEDF8C /* Main.storyboard */,
 				01AB000C1BFF3A6D00EEDF8C /* Assets.xcassets */,
 				01AB000E1BFF3A6D00EEDF8C /* LaunchScreen.storyboard */,
@@ -79,6 +127,23 @@
 			path = AXPickerView;
 			sourceTree = "<group>";
 		};
+		8DEAE7EA47AAF329D26E2E4A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				386716273A15EB03A34D4523 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		970B38AB018F89471EE68B95 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2933C407155FDFB56C435F73 /* Pods.debug.xcconfig */,
+				4E214C935F0082BB6510A659 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -86,9 +151,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 01AB00141BFF3A6D00EEDF8C /* Build configuration list for PBXNativeTarget "AXPickerView" */;
 			buildPhases = (
+				E88935B3C455ACB11C85B4C0 /* Check Pods Manifest.lock */,
 				01ABFFF91BFF3A6D00EEDF8C /* Sources */,
 				01ABFFFA1BFF3A6D00EEDF8C /* Frameworks */,
 				01ABFFFB1BFF3A6D00EEDF8C /* Resources */,
+				4C783AFA813756489B81A552 /* Embed Pods Frameworks */,
+				A585D0EA237BC4132D8D85FF /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -144,13 +212,66 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4C783AFA813756489B81A552 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A585D0EA237BC4132D8D85FF /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E88935B3C455ACB11C85B4C0 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		01ABFFF91BFF3A6D00EEDF8C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01AB00231BFF3AF400EEDF8C /* AXImagePickerCell.m in Sources */,
 				01AB00081BFF3A6D00EEDF8C /* ViewController.m in Sources */,
 				01AB00051BFF3A6D00EEDF8C /* AppDelegate.m in Sources */,
+				01AB00271BFF3AF400EEDF8C /* AXPickerView.m in Sources */,
+				01AB00251BFF3AF400EEDF8C /* AXPickerCollectionViewFlowLayout.m in Sources */,
+				01AB00241BFF3AF400EEDF8C /* AXPickerCollectionViewCell.m in Sources */,
+				01AB00261BFF3AF400EEDF8C /* AXPickerContentView.m in Sources */,
 				01AB00021BFF3A6D00EEDF8C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,9 +380,11 @@
 		};
 		01AB00151BFF3A6D00EEDF8C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2933C407155FDFB56C435F73 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AXPickerView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = KEEPStudio.AXPickerView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -270,9 +393,11 @@
 		};
 		01AB00161BFF3A6D00EEDF8C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4E214C935F0082BB6510A659 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AXPickerView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = KEEPStudio.AXPickerView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -289,6 +414,7 @@
 				01AB00161BFF3A6D00EEDF8C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		01ABFFF81BFF3A6D00EEDF8C /* Build configuration list for PBXProject "AXPickerView" */ = {
 			isa = XCConfigurationList;
