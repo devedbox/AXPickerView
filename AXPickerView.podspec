@@ -25,8 +25,12 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
-                   A multi style picker view in iOS.
-
+                    A multi style picker view in iOS.
+                    * Think: Why did you write this? What is the focus? What does it do?
+                    * CocoaPods will be using this to generate tags, and improve search results.
+                    * Try to keep it short, snappy and to the point.
+                    * Finally, don't worry about the indent, CocoaPods strips it!
+                    DESC
   s.homepage     = "https://github.com/devedbox/AXPickerView"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
