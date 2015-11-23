@@ -60,38 +60,28 @@
 #endif
 
 @class AXPickerView;
-/*!
- *  A block when the picker view cancel or hided with no handler
- *
- *  @param pickerView a picker view
- */
+/// A block when the picker view cancel or hided with no handler
+///
+///  @param pickerView a picker view
 typedef void(^AXPickerViewRevoking)(AXPickerView *pickerView);
-/*!
- *  A block when the pikcer completed
- *
- *  @param pickerView a picker view
- */
+/// A block when the pikcer completed
+///
+/// @param pickerView a picker view
 typedef void(^AXPickerViewCompletion)(AXPickerView *pickerView);
-/*!
- *  A block to configure the picker view before the picker's showing
- *
- *  @param pickerView the picker view to be configured
- */
+/// A block to configure the picker view before the picker's showing
+///
+/// @param pickerView the picker view to be configured
 typedef void(^AXPickerViewConfiguration)(AXPickerView *pickerView);
-/*!
- *  A block when the image picker view controller finished selecting images
- *
- *  @param pickerView a picker view
- *  @param images     selected images
- */
+/// A block when the image picker view controller finished selecting images
+///
+/// @param pickerView a picker view
+/// @param images     selected images
 typedef void(^AXImagePickerCompletion)(AXPickerView *pickerView, NSArray *images);
-/*!
- *  A block when the picker selected a item at the items
- *
- *  @param selectedTitle the title of the selected item
- *  @param index         the index of the selected item
- *  @param inPickerView  a picker view
- */
+/// A block when the picker selected a item at the items
+///
+/// @param selectedTitle the title of the selected item
+/// @param index         the index of the selected item
+/// @param inPickerView  a picker view
 typedef void(^AXPickerViewExecuting)(NSString *selectedTitle, NSInteger index, AXPickerView *inPickerView);
 /// Style of picker view
 typedef NS_ENUM(NSInteger, AXPickerViewStyle){
@@ -152,36 +142,30 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 @property(assign, nonatomic) id<AXPickerViewDataSource>dataSource;
 /// Should remove from superview when hided
 @property(assign, nonatomic) BOOL removeFromSuperViewOnHide UI_APPEARANCE_SELECTOR;
-/*!
- *  Initialize picker view with style and items.
- *  @discusstion If style is kind of Normal style, items should not be empty.
- *  @discusstion If style is one of DatePicker or CommonPicker, items will be ignored.
- *
- *  @param style a style of picker view to be initialized
- *  @param items items of a Normal style
- *
- *  @return an instance of AXPickerView
- */
+/// Initialize picker view with style and items.
+/// @discusstion If style is kind of Normal style, items should not be empty.
+///              If style is one of DatePicker or CommonPicker, items will be ignored.
+///
+/// @param style a style of picker view to be initialized
+/// @param items items of a Normal style
+///
+/// @return an instance of AXPickerView
 - (instancetype)initWithStyle:(AXPickerViewStyle)style items:(NSArray *)items;
-/*!
- *  Show picker view in the view that seted before with animation and blocks
- *  @discusstion If animated is YES, picker view will show with a default animation. Otherwise, picker view show without animation
- *  @discusstion When style of picker view is one of DatePicker and CommonPicker, completion will be executed if there has one when picker view has a completion action.
- *  @discusstion Revoking block will be executed when picker view has a revoking action such as canceling or touching background.
- *  @discusstion When style of picker view is Normal and picker view has a action of selecting item, executing block will be executed.
- *
- *  @param animated   A boolean value deciding how to show in a view.
- *  @param completion A completion call back block when competed.
- *  @param revoking   A revoking call back block when revoked.
- *  @param executing  Execute a block when selected item.
- */
+/// Show picker view in the view that seted before with animation and blocks
+/// @discusstion If animated is YES, picker view will show with a default animation. Otherwise, picker view show without animation
+///              When style of picker view is one of DatePicker and CommonPicker, completion will be executed if there has one when picker view has a completion action.
+///              Revoking block will be executed when picker view has a revoking action such as canceling or touching background.
+///              When style of picker view is Normal and picker view has a action of selecting item, executing block will be executed.
+///
+/// @param animated   A boolean value deciding how to show in a view.
+/// @param completion A completion call back block when competed.
+/// @param revoking   A revoking call back block when revoked.
+/// @param executing  Execute a block when selected item.
 - (void)showAnimated:(BOOL)animated completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing;
-/*!
- *  Hide picker view from superview, remove from super view if removeFromSuperViewOnHide is YES.
- *
- *  @param animated   A boolean value deciding how to hide.
- *  @param completion A completion block when finished hiding.
- */
+/// Hide picker view from superview, remove from super view if removeFromSuperViewOnHide is YES.
+///
+/// @param animated   A boolean value deciding how to hide.
+/// @param completion A completion block when finished hiding.
 - (void)hideAnimated:(BOOL)animated completion:(void(^)())completion;
 @end
 
@@ -193,17 +177,13 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 @interface AXPickerView(CommonPicker)
 /// Number of components
 @property(readonly, nonatomic) NSInteger numberOfComponents;
-/*!
- *  Get the selected row in a component.
- *
- *  @param component A component
- *
- *  @return A row number
- */
+/// Get the selected row in a component.
+///
+/// @param component A component
+///
+/// @return A row number
 - (NSInteger)selectedRowInComponent:(NSInteger)component;
-/*!
- *  Reload the custom data and refresh the common picker view
- */
+/// Reload the custom data and refresh the common picker view
 - (void)reloadData;
 @end
 
@@ -212,39 +192,35 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 @property(readonly, nonatomic) UILabel *tipsLabel;
 /// Tips font.
 @property(nonatomic) UIFont *tipsFont UI_APPEARANCE_SELECTOR;
-/*!
- *  Initialize a picker view and show in a target view with some params.
- *
- *  @param view          A target view.
- *  @param animated      A boolean value to decide animate or not.
- *  @param style         Style of picker view.
- *  @param items         Items when style is Normal style.
- *  @param title         Title of picker view.
- *  @param tips          Custom tips.
- *  @param configuration Configuration before picker view showing.
- *  @param completion    Completion call back block when completed.
- *  @param revoking      Revoking call bcak block when revoked.
- *  @param executing     Executing call back block when selected button items.
- *
- *  @return A configured picker view
- */
+/// Initialize a picker view and show in a target view with some params.
+///
+/// @param view          A target view.
+/// @param animated      A boolean value to decide animate or not.
+/// @param style         Style of picker view.
+/// @param items         Items when style is Normal style.
+/// @param title         Title of picker view.
+/// @param tips          Custom tips.
+/// @param configuration Configuration before picker view showing.
+/// @param completion    Completion call back block when completed.
+/// @param revoking      Revoking call bcak block when revoked.
+/// @param executing     Executing call back block when selected button items.
+///
+/// @return A configured picker view
 + (instancetype)showInView:(UIView *)view animated:(BOOL)animated style:(AXPickerViewStyle)style items:(NSArray *)items title:(NSString *)title tips:(NSString *)tips configuration:(AXPickerViewConfiguration)configuration completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing;
-/*!
- *  Initialize a picker view and show in a target view with some params.
- *
- *  @param view          A target view.
- *  @param animated      A boolean value to decide animate or not.
- *  @param style         Style of picker view.
- *  @param items         Items when style is Normal style.
- *  @param title         Title of picker view.
- *  @param customView    Custom view.
- *  @param configuration Configuration before picker view showing.
- *  @param completion    Completion call back block when completed.
- *  @param revoking      Revoking call bcak block when revoked.
- *  @param executing     Executing call back block when selected button items.
- *
- *  @return A configured picker view
- */
+/// Initialize a picker view and show in a target view with some params.
+///
+/// @param view          A target view.
+/// @param animated      A boolean value to decide animate or not.
+/// @param style         Style of picker view.
+/// @param items         Items when style is Normal style.
+/// @param title         Title of picker view.
+/// @param customView    Custom view.
+/// @param configuration Configuration before picker view showing.
+/// @param completion    Completion call back block when completed.
+/// @param revoking      Revoking call bcak block when revoked.
+/// @param executing     Executing call back block when selected button items.
+///
+/// @return A configured picker view
 + (instancetype)showInView:(UIView *)view animated:(BOOL)animated style:(AXPickerViewStyle)style items:(NSArray *)items title:(NSString *)title customView:(UIView *)customView configuration:(AXPickerViewConfiguration)configuration completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing;
 @end
 
@@ -265,20 +241,18 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 @property(strong, nonatomic) UIColor *selectionTintColor UI_APPEARANCE_SELECTOR;
 /// Image picker view controller
 @property(readonly, nonatomic) AXImagePickerController *imagePickerController;
-/*!
- *  Initialize a picker with a image picker view as custom view and show in a target view.
- *
- *  @param view                    A target view.
- *  @param animated                Animated or not.
- *  @param allowsMultipleSelection Allow multiple slection or not. Default is NO.
- *  @param containsCamera          Contains camera or not. Default is YES.
- *  @param configuration           Configuration before picker view showing.
- *  @param completion              Completion call back block when completed.
- *  @param revoking                Revoking call bcak block when revoked.
- *  @param imagePickerCompletion   Executing call back block when selected button items.
- *
- *  @return A configured picker view
- */
+/// Initialize a picker with a image picker view as custom view and show in a target view.
+///
+/// @param view                    A target view.
+/// @param animated                Animated or not.
+/// @param allowsMultipleSelection Allow multiple slection or not. Default is NO.
+/// @param containsCamera          Contains camera or not. Default is YES.
+/// @param configuration           Configuration before picker view showing.
+/// @param completion              Completion call back block when completed.
+/// @param revoking                Revoking call bcak block when revoked.
+/// @param imagePickerCompletion   Executing call back block when selected button items.
+///
+/// @return A configured picker view
 + (instancetype)showImagePickerInView:(UIView *)view animated:(BOOL)animated allowsMultipleSelection:(BOOL)allowsMultipleSelection containsCamera:(BOOL)containsCamera configuration:(AXPickerViewConfiguration)configuration completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking imagePickercompletion:(AXImagePickerCompletion)imagePickerCompletion;
 @end
 
@@ -292,49 +266,35 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 
 @protocol AXPickerViewDelegate <UIPickerViewDelegate>
 @optional
-/*!
- *  Picker view will show
- *
- *  @param pickerView a picker view
- */
+/// Picker view will show
+///
+/// @param pickerView a picker view
 - (void)pickerViewWillShow:(AXPickerView *)pickerView;
-/*!
- *  Picker view did show
- *
- *  @param pickerView a picker view
- */
+/// Picker view did show
+///
+/// @param pickerView a picker view
 - (void)pickerViewDidShow:(AXPickerView *)pickerView;
-/*!
- *  Picker view will hide
- *
- *  @param pickerView a picker view
- */
+/// Picker view will hide
+///
+/// @param pickerView a picker view
 - (void)pickerViewWillHide:(AXPickerView *)pickerView;
-/*!
- *  Picker view did hide
- *
- *  @param pickerView a picker view
- */
+/// Picker view did hide
+///
+/// @param pickerView a picker view
 - (void)pickerViewDidHide:(AXPickerView *)pickerView;
-/*!
- *  Picker view did cancel
- *
- *  @param pickerView a picker view
- */
+/// Picker view did cancel
+///
+/// @param pickerView a picker view
 - (void)pickerViewDidCancel:(AXPickerView *)pickerView;
-/*!
- *  Picker view did confirm
- *
- *  @param pickerView a picker view
- */
+/// Picker view did confirm
+///
+/// @param pickerView a picker view
 - (void)pickerViewDidConfirm:(AXPickerView *)pickerView;
-/*!
- *  Called when a picker view did selected item at index of items.
- *
- *  @param pickerView a picker view
- *  @param item       selected item
- *  @param index      a index of items
- */
+/// Called when a picker view did selected item at index of items.
+///
+/// @param pickerView a picker view
+/// @param item       selected item
+/// @param index      a index of items
 - (void)pickerView:(AXPickerView *)pickerView didSelectedItem:(NSString *)item atIndex:(NSInteger)index;
 @end
 
@@ -356,15 +316,13 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 @property(readonly, nonatomic) UIColor *tintColor;
 /// Text font of item.
 @property(readonly, nonatomic) UIFont *textFont;
-/*!
- *  Get instance of configuration with color, font and index.
- *
- *  @param tintColor A tint color of item.
- *  @param textFont  Text font of item.
- *  @param index     Index in the items.
- *
- *  @return configuration
- */
+/// Get instance of configuration with color, font and index.
+///
+/// @param tintColor A tint color of item.
+/// @param textFont  Text font of item.
+/// @param index     Index in the items.
+///
+/// @return configuration
 + (instancetype)configurationWithTintColor:(UIColor *)tintColor font:(UIFont *)textFont atIndex:(NSInteger)index;
 @end
 
@@ -377,15 +335,13 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 @property(readonly, nonatomic) UIEdgeInsets insets;
 /// Background color of separator view.
 @property(readonly, nonatomic) UIColor *color;
-/*!
- *  Get instance of configuration with height, insets, color and index.
- *
- *  @param height Height of separator.
- *  @param insets Insets of separator view.
- *  @param color  Color of separator view.
- *  @param index  Index of separaot view.
- *
- *  @return configuration
- */
+/// Get instance of configuration with height, insets, color and index.
+///
+/// @param height Height of separator.
+/// @param insets Insets of separator view.
+/// @param color  Color of separator view.
+/// @param index  Index of separaot view.
+///
+/// @return configuration
 + (instancetype)configurationWithHeight:(CGFloat)height insets:(UIEdgeInsets)insets color:(UIColor *)color atIndex:(NSInteger)index;
 @end
