@@ -58,20 +58,12 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle/ax_hud_error.png"
-  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle/ax_hud_error@2x.png"
-  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle/ax_hud_error@3x.png"
-  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle/ax_hud_success.png"
-  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle/ax_hud_success@2x.png"
-  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle/ax_hud_success@3x.png"
+  install_resource "AXImagePickerController/AXImagePickerController/AXImagePickerController/AXImagePickerController.bundle"
+  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle/ax_hud_error.png"
-  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle/ax_hud_error@2x.png"
-  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle/ax_hud_error@3x.png"
-  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle/ax_hud_success.png"
-  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle/ax_hud_success@2x.png"
-  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle/ax_hud_success@3x.png"
+  install_resource "AXImagePickerController/AXImagePickerController/AXImagePickerController/AXImagePickerController.bundle"
+  install_resource "AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle"
 fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

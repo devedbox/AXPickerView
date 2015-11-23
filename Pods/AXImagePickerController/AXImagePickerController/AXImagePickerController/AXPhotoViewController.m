@@ -197,7 +197,8 @@
         ALAsset *asset = _assets[indexPath.item];
         cell.photoView.image = [UIImage imageWithCGImage:[asset aspectRatioThumbnail]];
     }
-    cell.selectedLabel.textColor = self.selectionTintColor;
+//    cell.selectedLabel.textColor = self.selectionTintColor;
+    cell.tintColor = self.selectionTintColor;
     return cell;
 }
 

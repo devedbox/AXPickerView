@@ -10,7 +10,7 @@
 
 @interface AXPhotoCollectionViewCell : UICollectionViewCell
 /// Selected label info
-@property(strong, nonatomic) UILabel *selectedLabel;
+@property(strong, nonatomic) UILabel *selectedLabel __deprecated;
 /// Photo image view
 @property(strong, nonatomic) UIImageView *photoView;
 @end
