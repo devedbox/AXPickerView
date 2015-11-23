@@ -94,7 +94,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "AXPickerView/AXPickerView/*"
+  s.source_files  = "AXPickerView/AXPickerView/*.{h,m}", "AXPickerView/AXPickerView/AXPickerContentView/*.{h,m}"
   #s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
