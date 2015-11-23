@@ -8,6 +8,7 @@
 
 #import "AXTableViewController.h"
 #import "AXPickerView.h"
+#import <AXPracticalHUD/AXPracticalHUD.h>
 
 @interface AXTableViewController ()
 {
@@ -130,9 +131,12 @@
             } executing:nil];
             break;
         case 3:
+        {
             [AXPickerView showImagePickerInView:self.view.window animated:YES allowsMultipleSelection:YES containsCamera:YES configuration:nil completion:nil revoking:nil imagePickercompletion:^(AXPickerView *pickerView, NSArray *images) {
-                
+                [[AXPracticalHUD sharedHUD] showSuccessInView:self.view.window];
+                [[AXPracticalHUD sharedHUD] hideAnimated:YES afterDelay:2.0 completion:nil];
             }];
+        }
             break;
         default:
             break;

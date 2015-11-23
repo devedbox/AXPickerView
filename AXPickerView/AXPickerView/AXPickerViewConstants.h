@@ -1,5 +1,5 @@
 //
-//  AXImagePickerCell.h
+//  AXPickerViewConstants.h
 //  AXPickerView
 //
 //  Created by xing Ai on 9/6/15.
@@ -23,11 +23,39 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#ifndef AXPickerViewConstants_h
+#define AXPickerViewConstants_h
 
-@interface AXImagePickerCell : UICollectionViewCell
-/// Label
-@property (strong, nonatomic) UILabel *label __deprecated;
-/// Image view
-@property (strong, nonatomic) UIImageView *imageView;
-@end
+
+#endif /* AXPickerViewConstants_h */
+
+#ifndef kAXDefaultTintColor
+#define kAXDefaultTintColor [UIColor colorWithRed:0.059 green:0.059 blue:0.059 alpha:1.000]
+#endif
+#ifndef kAXDefaultSelectedColor
+#define kAXDefaultSelectedColor [UIColor colorWithRed:0.294 green:0.808 blue:0.478 alpha:1.000]
+#endif
+#ifndef kAXDefaultSeparatorColor
+#define kAXDefaultSeparatorColor [UIColor colorWithRed:0.824 green:0.824 blue:0.824 alpha:1.000]
+#endif
+#ifndef kAXDefaultBackgroundColor
+#define kAXDefaultBackgroundColor [UIColor colorWithRed:0.965 green:0.965 blue:0.965 alpha:0.700]
+#endif
+#ifndef kAXPickerToolBarHeight
+#define kAXPickerToolBarHeight 44.0f
+#endif
+#ifndef kAXPickerHeight
+#define kAXPickerHeight 216.0f
+#endif
+#define kPadding 5.0f
+#ifndef kCFCoreFoundationVersionNumber_iOS_8_0
+#define kCFCoreFoundationVersionNumber_iOS_8_0 1140.1
+#endif
+#ifndef EXECUTE_ON_MAIN_THREAD
+#define EXECUTE_ON_MAIN_THREAD(block) \
+if ([NSThread isMainThread]) {\
+block();\
+} else {\
+dispatch_async(dispatch_get_main_queue(), block);\
+}
+#endif

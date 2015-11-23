@@ -24,6 +24,12 @@
 //  SOFTWARE.
 
 #import "AXImagePickerCell.h"
+#import <AXExtensions/UIImage+TintColor.h>
+
+@interface AXImagePickerCell()
+@property(strong, nonatomic) UIImageView *markView;
+@property(strong, nonatomic) UIView *background;
+@end
 
 @implementation AXImagePickerCell
 #pragma mark - Life cycle
@@ -43,7 +49,9 @@
 
 - (void)initializer {
     [self.contentView addSubview:self.imageView];
-    [self.contentView addSubview:self.label];
+    /// Note: property `label` is deprecated sence version 1.0.2
+//    [self.contentView addSubview:self.label];
+    [self.contentView addSubview:self.background];
 }
 
 #pragma mark - Getters
@@ -68,16 +76,32 @@
     _imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
     return _imageView;
 }
+
+- (UIImageView *)markView {
+    if (_markView) return _markView;
+    _markView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"AXPickerView.bundle/mark"] tintImageWithColor:[UIColor colorWithWhite:0 alpha:0.6]]];
+    _markView.clipsToBounds = YES;
+    _markView.contentMode = UIViewContentModeScaleAspectFill;
+    _markView.backgroundColor = [UIColor clearColor];
+    _markView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
+    [_markView sizeToFit];
+    return _markView;
+}
+
+- (UIView *)background {
+    if (_background) return _background;
+    _background = [[UIView alloc] initWithFrame:self.contentView.bounds];
+    _background.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
+    _background.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [_background addSubview:self.markView];
+    _background.hidden = YES;
+    return _background;
+}
 #pragma mark - Override
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
     
-    _label.hidden = !selected;
-    if (selected) {
-        _imageView.alpha = 0.1;
-    } else {
-        _imageView.alpha = 1.0;
-    }
+    _background.hidden = !selected;
 }
 
 - (void)prepareForReuse {
@@ -94,5 +118,13 @@
     rect.origin.x = (_imageView.bounds.size.width - rect.size.width) / 2;
     rect.origin.y = (_imageView.bounds.size.height - rect.size.height) / 2;
     _label.frame = rect;
+    CGRect rect_mark = _markView.frame;
+    rect_mark.origin.x = (CGRectGetWidth(_imageView.frame) - CGRectGetWidth(rect_mark))/2;
+    rect_mark.origin.y = (CGRectGetHeight(_imageView.frame) - CGRectGetHeight(rect_mark))/2;
+    _markView.frame = rect_mark;
+}
+
+- (void)setTintColor:(UIColor *)tintColor {
+    [super setTintColor:tintColor];
 }
 @end

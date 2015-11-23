@@ -26,42 +26,13 @@
 #import <objc/runtime.h>
 #import "AXPickerView.h"
 #import "AXImagePickerCell.h"
+#import "AXPickerViewConstants.h"
 #import <AXExtensions/PHAsset+Image.h>
 #import <AXExtensions/ALAsset+Image.h>
 #import <AXPracticalHUD/AXPracticalHUD.h>
 #import <AXExtensions/UIToolbar+Separator_hidden.h>
 #import <AXExtensions/UIImagePickerController+Authorization.h>
 
-#ifndef kAXDefaultTintColor
-#define kAXDefaultTintColor [UIColor colorWithRed:0.059 green:0.059 blue:0.059 alpha:1.000]
-#endif
-#ifndef kAXDefaultSelectedColor
-#define kAXDefaultSelectedColor [UIColor colorWithRed:0.294 green:0.808 blue:0.478 alpha:1.000]
-#endif
-#ifndef kAXDefaultSeparatorColor
-#define kAXDefaultSeparatorColor [UIColor colorWithRed:0.824 green:0.824 blue:0.824 alpha:1.000]
-#endif
-#ifndef kAXDefaultBackgroundColor
-#define kAXDefaultBackgroundColor [UIColor colorWithRed:0.965 green:0.965 blue:0.965 alpha:0.700]
-#endif
-#ifndef kAXPickerToolBarHeight
-#define kAXPickerToolBarHeight 44.0f
-#endif
-#ifndef kAXPickerHeight
-#define kAXPickerHeight 216.0f
-#endif
-#define kPadding 5.0f
-#ifndef kCFCoreFoundationVersionNumber_iOS_8_0
-#define kCFCoreFoundationVersionNumber_iOS_8_0 1140.1
-#endif
-#ifndef EXECUTE_ON_MAIN_THREAD
-#define EXECUTE_ON_MAIN_THREAD(block) \
-if ([NSThread isMainThread]) {\
-    block();\
-} else {\
-    dispatch_async(dispatch_get_main_queue(), block);\
-}
-#endif
 @interface AXPickerView ()<AXPickerContentViewDelegate, AXPickerContentViewDataSource>
 /// Title label.
 @property(strong, nonatomic) UILabel *titleLabel;
@@ -1457,7 +1428,8 @@ if ([NSThread isMainThread]) {\
         ALAsset *asset = [self.photoAssets objectAtIndex:indexPath.item];
         cell.imageView.image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
     }
-    cell.label.textColor = self.selectionTintColor ? self.selectionTintColor : kAXDefaultSelectedColor;
+//    cell.label.textColor = self.selectionTintColor ? self.selectionTintColor : kAXDefaultSelectedColor;
+    cell.tintColor = self.selectionTintColor ? self.selectionTintColor : kAXDefaultSelectedColor;
     return cell;
 }
 #pragma mark - UICollectionViewDelegate
