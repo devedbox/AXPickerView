@@ -1,10 +1,27 @@
 //
 //  AXPickerView.m
-//  AXSwift2OC
+//  AXPickerView
 //
-//  Created by ai on 9/6/15.
-//  Copyright © 2015 ai. All rights reserved.
+//  Created by xing Ai on 9/6/15.
+//  Copyright (c) 2015 xing Ai. All rights reserved.
 //
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
 
 #import <objc/runtime.h>
 #import "AXPickerView.h"
@@ -15,6 +32,24 @@
 #import <AXExtensions/UIToolbar+Separator_hidden.h>
 #import <AXExtensions/UIImagePickerController+Authorization.h>
 
+#ifndef kAXDefaultTintColor
+#define kAXDefaultTintColor [UIColor colorWithRed:0.059 green:0.059 blue:0.059 alpha:1.000]
+#endif
+#ifndef kAXDefaultSelectedColor
+#define kAXDefaultSelectedColor [UIColor colorWithRed:0.294 green:0.808 blue:0.478 alpha:1.000]
+#endif
+#ifndef kAXDefaultSeparatorColor
+#define kAXDefaultSeparatorColor [UIColor colorWithRed:0.824 green:0.824 blue:0.824 alpha:1.000]
+#endif
+#ifndef kAXDefaultBackgroundColor
+#define kAXDefaultBackgroundColor [UIColor colorWithRed:0.965 green:0.965 blue:0.965 alpha:0.700]
+#endif
+#ifndef kAXPickerToolBarHeight
+#define kAXPickerToolBarHeight 44.0f
+#endif
+#ifndef kAXPickerHeight
+#define kAXPickerHeight 216.0f
+#endif
 #define kPadding 5.0f
 #ifndef kCFCoreFoundationVersionNumber_iOS_8_0
 #define kCFCoreFoundationVersionNumber_iOS_8_0 1140.1
@@ -28,29 +63,29 @@ if ([NSThread isMainThread]) {\
 }
 #endif
 @interface AXPickerView ()<AXPickerContentViewDelegate, AXPickerContentViewDataSource>
-///
+/// Title label.
 @property(strong, nonatomic) UILabel *titleLabel;
-///
+/// Complete button.
 @property(strong, nonatomic) UIButton *completeBtn;
-///
+/// Cancel button.
 @property(strong, nonatomic) UIButton *cancelBtn;
-///
+/// Date picker view.
 @property(strong, nonatomic) UIDatePicker *datePicker;
-///
+/// Common picker view.
 @property(strong, nonatomic) UIPickerView *commonPicker;
-///
+/// Background view.
 @property(strong, nonatomic) AXPickerContentView *backgroundView;
-///
+/// Blur effect tool bar.
 @property(strong, nonatomic) UIToolbar *effectBar;
-///
+/// Blur effect view.
 @property(strong, nonatomic) UIVisualEffectView *effectView;
-///
+/// Completion call back block.
 @property(copy, nonatomic) AXPickerViewCompletion completion;
-///
+/// Image picker view completion call back block.
 @property(copy, nonatomic) AXImagePickerCompletion imagePickerCompletion;
-///
+/// Recoking call back block.
 @property(copy, nonatomic) AXPickerViewRevoking revoking;
-///
+/// Executing call bacl block.
 @property(copy, nonatomic) AXPickerViewExecuting executing;
 @end
 
@@ -645,11 +680,6 @@ if ([NSThread isMainThread]) {\
 }
 
 #pragma mark - Private_helper
-/*!
- *  <#Description#>
- *
- *  @return <#return value description#>
- */
 - (UIVisualEffectView *)subEffectView NS_AVAILABLE_IOS(8_0) {
     UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
@@ -658,15 +688,6 @@ if ([NSThread isMainThread]) {\
     return effectView;
 }
 
-/*!
- *  Get a button with title and a right height
- *
- *  @param title  <#title description#>
- *  @param height <#height description#>
- *  @param index  <#index description#>
- *
- *  @return <#return value description#>
- */
 - (UIButton *)buttonWithTitle:(NSString *)title rightHeight:(CGFloat)height atIndex:(NSInteger)index {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     [button setTitle:title forState:UIControlStateNormal];
@@ -718,16 +739,7 @@ if ([NSThread isMainThread]) {\
     }
     return button;
 }
-/*!
- *  Get a separator layer with a height, color, insets at a index
- *
- *  @param height <#height description#>
- *  @param color  <#color description#>
- *  @param insets <#insets description#>
- *  @param index  <#index description#>
- *
- *  @return <#return value description#>
- */
+
 - (CALayer *)separatorWithHeight:(CGFloat)height color:(UIColor *)color insets:(UIEdgeInsets)insets atIndex:(NSInteger)index {
     CALayer *layer = [CALayer layer];
     layer.frame = CGRectMake(insets.left, kAXPickerToolBarHeight * index, self.bounds.size.width - (insets.left + insets.right), height);
@@ -735,7 +747,7 @@ if ([NSThread isMainThread]) {\
     layer.tag = ++index;
     return layer;
 }
-/// Configure views
+
 - (void)configureViews {
     self.titleLabel.font = _titleFont;
     _titleLabel.textColor = _titleTextColor;
@@ -752,7 +764,7 @@ if ([NSThread isMainThread]) {\
             break;
     }
 }
-///
+
 - (void)configureCustomView {
     CGFloat originY = 0.f;
     switch (_style) {
@@ -776,7 +788,7 @@ if ([NSThread isMainThread]) {\
     
     _customView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
 }
-/// Configure common style
+
 - (void)configureNormal {
     NSArray *buttons = [self.subviews filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         if ([evaluatedObject isKindOfClass:[UIButton class]]) {
@@ -840,14 +852,14 @@ if ([NSThread isMainThread]) {\
     self.cancelBtn.titleLabel.font = _cancelFont;
     _cancelBtn.tintColor = _cancelTextColor;
 }
-/// Configure picker style
+
 - (void)configurePicker {
     self.cancelBtn.titleLabel.font = _cancelFont;
     _cancelBtn.tintColor = _cancelTextColor;
     self.completeBtn.titleLabel.font = _completeFont;
     _completeBtn.tintColor = _completeTextColor;
 }
-/// Configure tools
+
 - (void)configureTools {
     self.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
     CGRect rect = _titleLabel.frame;
@@ -886,7 +898,7 @@ if ([NSThread isMainThread]) {\
     }
     _titleLabel.frame = rect;
 }
-/// Animated to set self to a right size
+
 - (void)resizingSelfAnimated:(BOOL)animated {
     if (!self.superview) return;
     CGSize size = [self sizeThatFits:self.bounds.size];
@@ -904,7 +916,7 @@ if ([NSThread isMainThread]) {\
         self.frame = CGRectMake(0.f, originY, size.width, size.height);
     }
 }
-/// Set size of custom view to a right size
+
 - (void)resizingCustomView {
     if (![_customView isKindOfClass:[UILabel class]]) return;
     UILabel *label = (UILabel *)_customView;
@@ -1046,16 +1058,7 @@ if ([NSThread isMainThread]) {\
         label.text = tips;
         aCustomView = label;
     }
-    return [self showInView:view
-                   animated:animated
-                      style:style
-                      items:items
-                      title:title
-                 customView:aCustomView
-              configuration:configuration
-                 completion:completion
-                   revoking:revoking
-                  executing:executing];
+    return [self showInView:view animated:animated style:style items:items title:title customView:aCustomView configuration:configuration completion:completion revoking:revoking executing:executing];
 }
 + (instancetype)showInView:(UIView *)view animated:(BOOL)animated style:(AXPickerViewStyle)style items:(NSArray *)items title:(NSString *)title customView:(UIView *)customView configuration:(AXPickerViewConfiguration)configuration completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing
 {
@@ -1073,10 +1076,7 @@ if ([NSThread isMainThread]) {\
         });
     }
     // Show
-    [pickerView showAnimated:YES
-                  completion:completion
-                    revoking:revoking
-                   executing:executing];
+    [pickerView showAnimated:YES completion:completion revoking:revoking executing:executing];
     return pickerView;
 }
 @end
