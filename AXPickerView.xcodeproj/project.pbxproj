@@ -18,6 +18,7 @@
 		01AB00261BFF3AF400EEDF8C /* AXPickerContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB00201BFF3AF300EEDF8C /* AXPickerContentView.m */; };
 		01AB00271BFF3AF400EEDF8C /* AXPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB00221BFF3AF300EEDF8C /* AXPickerView.m */; };
 		01C0C5E51C02BD2300E0BF99 /* AXTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C0C5E41C02BD2300E0BF99 /* AXTableViewController.m */; };
+		01C0C5E71C02E1C100E0BF99 /* TestImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01C0C5E61C02E1C100E0BF99 /* TestImage.jpg */; };
 		D362E12481D172C96AE67B74 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 386716273A15EB03A34D4523 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		01ABFFFD1BFF3A6D00EEDF8C /* AXPickerView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AXPickerView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01C0C5E31C02BD2300E0BF99 /* AXTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXTableViewController.h; sourceTree = "<group>"; };
 		01C0C5E41C02BD2300E0BF99 /* AXTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXTableViewController.m; sourceTree = "<group>"; };
+		01C0C5E61C02E1C100E0BF99 /* TestImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TestImage.jpg; sourceTree = "<group>"; };
 		2933C407155FDFB56C435F73 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		386716273A15EB03A34D4523 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E214C935F0082BB6510A659 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				01AB00171BFF3AF300EEDF8C /* AXPickerView */,
 				01AB00091BFF3A6D00EEDF8C /* Main.storyboard */,
 				01AB000C1BFF3A6D00EEDF8C /* Assets.xcassets */,
+				01C0C5E61C02E1C100E0BF99 /* TestImage.jpg */,
 				01AB000E1BFF3A6D00EEDF8C /* LaunchScreen.storyboard */,
 				01AB00111BFF3A6D00EEDF8C /* Info.plist */,
 				01AB00001BFF3A6D00EEDF8C /* Supporting Files */,
@@ -205,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01AB00101BFF3A6D00EEDF8C /* LaunchScreen.storyboard in Resources */,
+				01C0C5E71C02E1C100E0BF99 /* TestImage.jpg in Resources */,
 				01AB000D1BFF3A6D00EEDF8C /* Assets.xcassets in Resources */,
 				01AB000B1BFF3A6D00EEDF8C /* Main.storyboard in Resources */,
 			);
