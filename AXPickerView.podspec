@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "AXPickerView"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "A multi style picker view in iOS."
 
   # This description is used to generate tags and improve search results.
@@ -83,7 +83,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/devedbox/AXPickerView.git", :tag => "1.0.0" }
+  s.source       = { :git => "https://github.com/devedbox/AXPickerView.git", :tag => "1.0.1" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -94,7 +94,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "AXPickerView/AXPickerView/*.{h,m}", "AXPickerView/AXPickerView/AXPickerContentView/*.{h,m}"
+  s.source_files  = "AXPickerView/AXPickerView/*"
   #s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
