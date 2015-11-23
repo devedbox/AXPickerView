@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class AXTitleView;
 @interface UIViewController (Title)
+/// Title view
+@property(readonly, nonatomic) AXTitleView *titleView;
 /*!
  *  Set a title of view controller with a sepefic title and text color of title label and font
  *
@@ -18,5 +21,11 @@
  *
  *  @return Void
  */
-- (void)setTitle:(NSString *)title titleColor:(UIColor *)color titleFont:(UIFont *)font;
+- (void)setTitle:(NSString *)title color:(UIColor *)color font:(UIFont *)font;
+@end
+@interface AXTitleView : UIView
+/// Title label
+@property(strong, nonatomic) UILabel *titleLabel;
+/// Title activityIndicator
+@property(strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @end

@@ -1,9 +1,9 @@
 PODS:
-  - AXExtensions (1.0.0)
+  - AXExtensions (1.0.2)
   - AXImagePickerController (1.0.0):
     - AXExtensions
     - AXPracticalHUD
-  - AXPracticalHUD (1.0.3)
+  - AXPracticalHUD (1.0.4)
 
 DEPENDENCIES:
   - AXExtensions
@@ -11,8 +11,8 @@ DEPENDENCIES:
   - AXPracticalHUD
 
 SPEC CHECKSUMS:
-  AXExtensions: 50fcb0126698eb2074f85dd3f8672345fef398a9
+  AXExtensions: d73cf9f8650842eb6989b106798292eda6183179
   AXImagePickerController: 23a9c4a2adbcd1e910f53b23426de38122709e77
-  AXPracticalHUD: afcd85f9d569060b2b1d4b08a7d89bfc79b18a71
+  AXPracticalHUD: 6b15b98a561615d806aaa4033a20460cc9d3e2f5
 
 COCOAPODS: 0.39.0
