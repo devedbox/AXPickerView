@@ -98,8 +98,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch (indexPath.row) {
         case 0:
-            [AXPickerView showInView:self.view.window animated:YES style:AXPickerViewStyleNormal items:@[@"Yesterday",@"Today",@"Tomorrow"] title:@"Date" tips:@"Hello this is today." configuration:^(AXPickerView *pickerView) {
+            [AXPickerView showInView:self.view.window animated:YES style:AXPickerViewStyleNormal items:@[@"Yesterday",@"Today",@"Tomorrow"] title:@"Date" tips:@"Hello this is today.\n\nGet the new view controller using [segue destinationViewController].\n\nPass the selected object to the new view controller." configuration:^(AXPickerView *pickerView) {
                 pickerView.separatorInsets = UIEdgeInsetsZero;
+                pickerView.tipsFont = [UIFont systemFontOfSize:14];
+                pickerView.tipsLabel.textColor = [UIColor redColor];
+                pickerView.tipsLabel.textAlignment = NSTextAlignmentLeft;
             } completion:nil revoking:nil executing:^(NSString *selectedTitle, NSInteger index, AXPickerView *inPickerView) {
                 NSLog(@"selected: %@", selectedTitle);
             }];
