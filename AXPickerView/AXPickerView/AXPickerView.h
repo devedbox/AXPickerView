@@ -210,6 +210,8 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 @interface AXPickerView(Convenience)
 /// Tips content label
 @property(readonly, nonatomic) UILabel *tipsLabel;
+/// Tips font.
+@property(nonatomic) UIFont *tipsFont;
 /*!
  *  Initialize a picker view and show in a target view with some params.
  *

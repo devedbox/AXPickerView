@@ -1013,6 +1013,20 @@ if ([NSThread isMainThread]) {\
     return nil;
 }
 
+- (UIFont *)tipsFont {
+    return self.tipsLabel.font;
+}
+
+- (void)setTipsFont:(UIFont *)tipsFont {
+    [self.tipsLabel setFont:tipsFont];
+    CGRect rect = self.tipsLabel.frame;
+    CGSize usedSize = [self.tipsLabel.text boundingRectWithSize:CGSizeMake([UIScreen mainScreen].bounds.size.width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : tipsFont} context:nil].size;
+    rect.size = CGSizeMake(ceil(usedSize.width), ceil(usedSize.height));
+    self.tipsLabel.frame = rect;
+    [self setNeedsDisplay];
+    [self resizingSelfAnimated:NO];
+}
+
 + (instancetype)showInView:(UIView *)view animated:(BOOL)animated style:(AXPickerViewStyle)style items:(NSArray *)items title:(NSString *)title tips:(NSString *)tips configuration:(AXPickerViewConfiguration)configuration completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing
 {
     UIView *aCustomView = nil;
