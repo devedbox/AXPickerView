@@ -115,43 +115,43 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 /// Titles of buttons in picker view
 @property(copy,   nonatomic) NSArray *items;
 /// Title label font of buttons
-@property(strong, nonatomic) UIFont *itemFont;
+@property(strong, nonatomic) UIFont *itemFont UI_APPEARANCE_SELECTOR;
 /// Font of title label
-@property(strong, nonatomic) UIFont *titleFont;
+@property(strong, nonatomic) UIFont *titleFont UI_APPEARANCE_SELECTOR;
 /// Configurations of buttons
 @property(copy,   nonatomic) NSArray *itemConfigs;
 /// Title label font of cancel button
-@property(strong, nonatomic) UIFont *cancelFont;
+@property(strong, nonatomic) UIFont *cancelFont UI_APPEARANCE_SELECTOR;
 /// A custom view below the title label
 @property(strong, nonatomic) UIView *customView;
 /// Title label font of complete button
-@property(strong, nonatomic) UIFont *completeFont;
+@property(strong, nonatomic) UIFont *completeFont UI_APPEARANCE_SELECTOR;
 /// Tint color of button items
-@property(strong, nonatomic) UIColor *itemTintColor;
+@property(strong, nonatomic) UIColor *itemTintColor UI_APPEARANCE_SELECTOR;
 /// Style of picker view
 @property(assign, nonatomic) AXPickerViewStyle style;
 /// Text color of title label
-@property(strong, nonatomic) UIColor *titleTextColor;
+@property(strong, nonatomic) UIColor *titleTextColor UI_APPEARANCE_SELECTOR;
 /// Background color of separator view
-@property(strong, nonatomic) UIColor *separatorColor;
+@property(strong, nonatomic) UIColor *separatorColor UI_APPEARANCE_SELECTOR;
 /// Configurations of separator view
 @property(copy,   nonatomic) NSArray *separatorConfigs;
 /// Title label color of cancel button
-@property(strong, nonatomic) UIColor *cancelTextColor;
+@property(strong, nonatomic) UIColor *cancelTextColor UI_APPEARANCE_SELECTOR;
 /// Title label color of complete button
-@property(strong, nonatomic) UIColor *completeTextColor;
+@property(strong, nonatomic) UIColor *completeTextColor UI_APPEARANCE_SELECTOR;
 /// Insets of separator view
-@property(assign, nonatomic) UIEdgeInsets separatorInsets;
+@property(assign, nonatomic) UIEdgeInsets separatorInsets UI_APPEARANCE_SELECTOR;
 /// Insets of custom view
-@property(assign, nonatomic) UIEdgeInsets customViewInsets;
+@property(assign, nonatomic) UIEdgeInsets customViewInsets UI_APPEARANCE_SELECTOR;
 /// Should scale background view
-@property(assign, nonatomic) BOOL scaleBackgroundView;
+@property(assign, nonatomic) BOOL scaleBackgroundView UI_APPEARANCE_SELECTOR;
 /// Delegate conforms to AXPikcerViewDelegate
 @property(assign, nonatomic) id<AXPickerViewDelegate>delegate;
 /// Datasource conforms to AXPickerViewDataSource
 @property(assign, nonatomic) id<AXPickerViewDataSource>dataSource;
 /// Should remove from superview when hided
-@property(assign, nonatomic) BOOL removeFromSuperViewOnHide;
+@property(assign, nonatomic) BOOL removeFromSuperViewOnHide UI_APPEARANCE_SELECTOR;
 /*!
  *  Initialize picker view with style and items.
  *  @discusstion If style is kind of Normal style, items should not be empty.
@@ -211,7 +211,7 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 /// Tips content label
 @property(readonly, nonatomic) UILabel *tipsLabel;
 /// Tips font.
-@property(nonatomic) UIFont *tipsFont;
+@property(nonatomic) UIFont *tipsFont UI_APPEARANCE_SELECTOR;
 /*!
  *  Initialize a picker view and show in a target view with some params.
  *
@@ -262,7 +262,7 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 /// Max allowed image selection count. Defaults 9.
 @property(assign, nonatomic) NSUInteger maxAllowedSelectionCount;
 /// Selection tint color. Default green.
-@property(strong, nonatomic) UIColor *selectionTintColor;
+@property(strong, nonatomic) UIColor *selectionTintColor UI_APPEARANCE_SELECTOR;
 /// Image picker view controller
 @property(readonly, nonatomic) AXImagePickerController *imagePickerController;
 /*!

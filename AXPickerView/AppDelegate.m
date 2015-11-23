@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "AXPickerView.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[AXPickerView appearance] setSeparatorInsets:UIEdgeInsetsZero];
+    [[AXPickerView appearance] setTipsFont:[UIFont systemFontOfSize:14]];
+    [[AXPickerView appearance] setItemFont:[UIFont systemFontOfSize:18]];
+    [[AXPickerView appearance] setItemTintColor:[UIColor blackColor]];
+    [[AXPickerView appearance] setScaleBackgroundView:NO];
     return YES;
 }
 

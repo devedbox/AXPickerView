@@ -25,7 +25,11 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    _dataSource = @[@{@"title":@"Tips",@"detail":@"Show normal picker view with tips"}];
+    _dataSource = @[@{@"title":@"Tips",@"detail":@"Show normal picker view with tips."},
+                    @{@"title":@"Custion view",@"detail":@"Show normal picker view with custom view."},
+                    @{@"title":@"Date picker",@"detail":@"Show date picker view."},
+                    @{@"title":@"Image picker",@"detail":@"Show normal picker view with image picker view."}
+                    ];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -98,16 +102,38 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch (indexPath.row) {
         case 0:
-            [AXPickerView showInView:self.view.window animated:YES style:AXPickerViewStyleNormal items:@[@"Yesterday",@"Today",@"Tomorrow"] title:@"Date" tips:@"Hello this is today.\n\nGet the new view controller using [segue destinationViewController].\n\nPass the selected object to the new view controller." configuration:^(AXPickerView *pickerView) {
-                pickerView.separatorInsets = UIEdgeInsetsZero;
-                pickerView.tipsFont = [UIFont systemFontOfSize:14];
-                pickerView.tipsLabel.textColor = [UIColor redColor];
+            [AXPickerView showInView:self.view.window animated:YES style:AXPickerViewStyleNormal items:@[@"Yesterday",@"Today",@"Tomorrow"] title:@"Normal title" tips:@"Hello this is today.\n\nGet the new view controller using [segue destinationViewController].\n\nPass the selected object to the new view controller." configuration:^(AXPickerView *pickerView) {
                 pickerView.tipsLabel.textAlignment = NSTextAlignmentLeft;
+                AXPickerViewItemConfiguration *config = [AXPickerViewItemConfiguration configurationWithTintColor:[UIColor redColor] font:[UIFont boldSystemFontOfSize:16] atIndex:0];
+                pickerView.itemConfigs = @[config];
             } completion:nil revoking:nil executing:^(NSString *selectedTitle, NSInteger index, AXPickerView *inPickerView) {
                 NSLog(@"selected: %@", selectedTitle);
             }];
             break;
-            
+        case 1:
+        {
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TestImage.jpg"]];
+            [imageView sizeToFit];
+            [AXPickerView showInView:self.view.window animated:YES style:AXPickerViewStyleNormal items:@[@"Yesterday",@"Today",@"Tomorrow"] title:@"Normal title" customView:imageView configuration:nil completion:nil revoking:nil executing:^(NSString *selectedTitle, NSInteger index, AXPickerView *inPickerView) {
+                NSLog(@"selected: %@", selectedTitle);
+            }];
+        }
+            break;
+        case 2:
+            [AXPickerView showInView:self.view.window animated:YES style:AXPickerViewStyleDatePicker items:nil title:nil customView:nil configuration:^(AXPickerView *pickerView) {
+                pickerView.separatorInsets = UIEdgeInsetsZero;
+                pickerView.title = @"Date pick";
+            } completion:^(AXPickerView *pickerView) {
+                NSLog(@"selected date: %@", pickerView.selectedDate);
+            } revoking:^(AXPickerView *pickerView) {
+                NSLog(@"Canceled");
+            } executing:nil];
+            break;
+        case 3:
+            [AXPickerView showImagePickerInView:self.view.window animated:YES allowsMultipleSelection:YES containsCamera:YES configuration:nil completion:nil revoking:nil imagePickercompletion:^(AXPickerView *pickerView, NSArray *images) {
+                
+            }];
+            break;
         default:
             break;
     }
