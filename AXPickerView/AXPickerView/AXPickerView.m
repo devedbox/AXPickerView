@@ -178,6 +178,11 @@
             for (NSInteger i = 0; i < count; i ++) {
                 [self addSubview:[self buttonWithTitle:_items[i] rightHeight:kAXPickerToolBarHeight atIndex:i]];
             }
+            
+            if (_cancelBtn) {
+                _cancelBtn.backgroundColor = [UIColor clearColor];
+                [_cancelBtn setBackgroundImage:[self tintImage:[UIImage imageNamed:@"AXPickerView.bundle/ax_button"] WithColor:[[UIColor whiteColor] colorWithAlphaComponent:0.9]] forState:UIControlStateNormal];
+            }
         }
             break;
         case AXPickerViewStyleDatePicker:
@@ -204,6 +209,11 @@
             // Added to view
             [self addSubview:_datePicker];
             [self addSubview:_titleLabel];
+            
+            if (_cancelBtn) {
+                [_cancelBtn setBackgroundColor:kAXDefaultBackgroundColor];
+                [_cancelBtn setBackgroundImage:nil forState:UIControlStateNormal];
+            }
         }
             break;
         case AXPickerViewStyleCommonPicker:
@@ -230,6 +240,11 @@
             // Added to view
             [self addSubview:_commonPicker];
             [self addSubview:_titleLabel];
+            
+            if (_cancelBtn) {
+                [_cancelBtn setBackgroundColor:kAXDefaultBackgroundColor];
+                [_cancelBtn setBackgroundImage:nil forState:UIControlStateNormal];
+            }
         }
             break;
         default:
@@ -663,7 +678,8 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     [button setTitle:title forState:UIControlStateNormal];
     button.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-    button.backgroundColor = kAXDefaultBackgroundColor;
+    button.backgroundColor = [UIColor clearColor];
+    [button setBackgroundImage:[self tintImage:[UIImage imageNamed:@"AXPickerView.bundle/ax_button"] WithColor:[[UIColor whiteColor] colorWithAlphaComponent:0.9]] forState:UIControlStateNormal];
     UIColor * __block aItemColor;
     UIFont * __block aItemFont;
     [_itemConfigs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -901,6 +917,22 @@
     label.frame = rect;
     
     [self setNeedsDisplay];
+}
+
+- (UIImage *)tintImage:(UIImage *)image WithColor:(UIColor *)color
+{
+    UIGraphicsBeginImageContextWithOptions(image.size, NO, image.scale);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(context, 0, image.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    CGContextSetBlendMode(context, kCGBlendModeNormal);
+    CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
+    CGContextClipToMask(context, rect, image.CGImage);
+    [color setFill];
+    CGContextFillRect(context, rect);
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 #pragma mark - Private_actions
