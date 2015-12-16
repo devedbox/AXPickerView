@@ -181,7 +181,7 @@
             
             if (_cancelBtn) {
                 _cancelBtn.backgroundColor = [UIColor clearColor];
-                [_cancelBtn setBackgroundImage:[self tintImage:[UIImage imageNamed:@"AXPickerView.bundle/ax_button"] WithColor:[[UIColor whiteColor] colorWithAlphaComponent:0.9]] forState:UIControlStateNormal];
+                [_cancelBtn setBackgroundImage:[self tintImage:[UIImage imageNamed:@"AXPickerView.bundle/ax_button"] WithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
             }
         }
             break;
@@ -679,7 +679,7 @@
     [button setTitle:title forState:UIControlStateNormal];
     button.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     button.backgroundColor = [UIColor clearColor];
-    [button setBackgroundImage:[self tintImage:[UIImage imageNamed:@"AXPickerView.bundle/ax_button"] WithColor:[[UIColor whiteColor] colorWithAlphaComponent:0.9]] forState:UIControlStateNormal];
+    [button setBackgroundImage:[self tintImage:[UIImage imageNamed:@"AXPickerView.bundle/ax_button"] WithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     UIColor * __block aItemColor;
     UIFont * __block aItemFont;
     [_itemConfigs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
