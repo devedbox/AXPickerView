@@ -1133,6 +1133,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleALLibraryChangedNotification:) name:ALAssetsLibraryChangedNotification object:nil];
     }
     [AXImagePickerController requestAuthorizationCompletion:^{
+        [collectionView reloadData];
         [pickerView showAnimated:YES
                       completion:completion
                         revoking:revoking
@@ -1415,10 +1416,10 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
-        PHAsset *asset = [self.photoAssetsResult objectAtIndex:indexPath.item];
+        PHAsset *asset = [self.photoAssetsResult objectAtIndex:indexPath.row];
         return [self rightSizeWithOriginalSize:CGSizeMake(asset.pixelWidth, asset.pixelHeight) rightHeight:kImagePickerRightHeight];
     } else {
-        ALAsset *asset = [self.photoAssets objectAtIndex:indexPath.item];
+        ALAsset *asset = [self.photoAssets objectAtIndex:indexPath.row];
         return [self rightSizeWithOriginalSize:asset.defaultRepresentation.dimensions rightHeight:kImagePickerRightHeight];
     }
 }
@@ -1447,17 +1448,19 @@
     AXImagePickerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kImagePickerReuseIdentifier
                                                                         forIndexPath:indexPath];
     if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
-        PHAsset *asset = [self.photoAssetsResult objectAtIndex:indexPath.item];
+        PHAsset *asset = [self.photoAssetsResult objectAtIndex:indexPath.row];
         CGSize targetSize = [self rightSizeWithOriginalSize:CGSizeMake(asset.pixelWidth, asset.pixelHeight) rightHeight:kImagePickerRightHeight];
         [[PHImageManager defaultManager] requestImageForAsset:asset
                                                    targetSize:CGSizeMake(targetSize.width * 2, targetSize.height * 2)
                                                   contentMode:PHImageContentModeAspectFill
                                                       options:nil
                                                 resultHandler:^(UIImage *result, NSDictionary *info) {
-                                                    cell.imageView.image = result;
+                                                    if (result) {
+                                                        cell.imageView.image = result;
+                                                    }
                                                 }];
     } else {
-        ALAsset *asset = [self.photoAssets objectAtIndex:indexPath.item];
+        ALAsset *asset = [self.photoAssets objectAtIndex:indexPath.row];
         cell.imageView.image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
     }
 //    cell.label.textColor = self.selectionTintColor ? self.selectionTintColor : kAXDefaultSelectedColor;
