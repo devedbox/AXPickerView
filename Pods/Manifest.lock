@@ -1,10 +1,12 @@
 PODS:
-  - AXCollectionViewFlowLayout (1.0.0)
-  - AXExtensions (1.0.4)
+  - AXCollectionViewFlowLayout (1.0.1)
+  - AXExtensions (1.2.2):
+    - MJRefresh (~> 3.0.0)
   - AXImagePickerController (1.0.2):
     - AXExtensions
     - AXPracticalHUD
-  - AXPracticalHUD (1.0.5)
+  - AXPracticalHUD (1.0.7)
+  - MJRefresh (3.0.8)
 
 DEPENDENCIES:
   - AXCollectionViewFlowLayout
@@ -13,10 +15,11 @@ DEPENDENCIES:
   - AXPracticalHUD
 
 SPEC CHECKSUMS:
-  AXCollectionViewFlowLayout: 9266a9eee0b8c47e3eb952ce82066d110488b1f0
-  AXExtensions: d8cd53dcd332b001e5ec5773e50b8dfe8d92c0db
+  AXCollectionViewFlowLayout: bf02f0b0733741258e8afe2974b5e02fd645ce08
+  AXExtensions: 68e5c748ca1973ac2c1cc1d32597477b7a34058e
   AXImagePickerController: 242407f0e035a9fb1c76dc6b78b42b51293cf05b
-  AXPracticalHUD: 9b6bc41a218260f76d224632519759ddce904346
+  AXPracticalHUD: b0a87276b9830b98ad79c4178f59717b777cfdcc
+  MJRefresh: fafde8f18f4afd66b434331a9beb67a6c0264056
 
 PODFILE CHECKSUM: 2846fe7d37c8c2709987e08f39c972e6fba28c93
 

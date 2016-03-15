@@ -29,12 +29,14 @@
     }
     if (font) self.titleView.titleLabel.font = font;
     self.titleView.titleLabel.text = [self title];
-    [self.titleView sizeToFit];
     self.navigationItem.titleView = self.titleView;
 }
 @end
 
 @implementation AXTitleView
+
+@synthesize titleLabel = _titleLabel;
+
 #pragma mark - Life cycle
 - (instancetype)init {
     if (self = [super init]) {
@@ -64,32 +66,15 @@
 }
 
 #pragma mark - Override
-- (CGSize)sizeThatFits:(CGSize)size {
-    CGSize susize = [super sizeThatFits:size];
-    [_titleLabel sizeToFit];
-    susize.width = CGRectGetWidth(_titleLabel.frame) + (CGRectGetHeight(_titleLabel.frame) + 10)*2;
-    susize.height = CGRectGetHeight(_titleLabel.frame);
-    return susize;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    [self sizeToFit];
-    CGRect rect_label            = _titleLabel.frame;
-    rect_label.origin.x          = CGRectGetMaxX(self.activityIndicator.frame) + 10;
-    self.titleLabel.frame        = rect_label;
-    CGRect rect_activity         = _activityIndicator.frame;
-    rect_activity.origin.y       = (CGRectGetHeight(rect_label) - CGRectGetHeight(rect_activity)) / 2;
-    rect_activity.origin.x       = _titleLabel.frame.origin.x - (rect_activity.size.width + 10);
-    self.activityIndicator.frame = rect_activity;
-}
-
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
-    if (newSuperview) [self layoutSubviews];
+    if (newSuperview) {
+        [self updatePositions];
+    }
 }
 
 #pragma mark - Getters
+
 - (UIActivityIndicatorView *)activityIndicator {
     if (_activityIndicator) return _activityIndicator;
     _activityIndicator                  = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -103,9 +88,33 @@
     _titleLabel.font            = [UIFont boldSystemFontOfSize:20.f];
     _titleLabel.textColor       = [UIColor colorWithRed:0.100f green:0.100f blue:0.100f alpha:0.800f];
     _titleLabel.backgroundColor = [UIColor clearColor];
-    _titleLabel.textAlignment   = NSTextAlignmentCenter;
+    _titleLabel.textAlignment   = NSTextAlignmentLeft;
     _titleLabel.numberOfLines   = 1;
     _titleLabel.lineBreakMode   = NSLineBreakByTruncatingTail;
     return _titleLabel;
+}
+
+#pragma mark - Setters
+- (void)setTitle:(NSString *)title {
+    _title = [title copy];
+    _titleLabel.text = title;
+    [self updatePositions];
+}
+
+#pragma mark - Private
+
+- (void)updatePositions {
+    [_titleLabel sizeToFit];
+    
+    CGRect rect_acti = _activityIndicator.frame;
+    CGRect rect_label = _titleLabel.frame;
+    
+    rect_acti.size = CGSizeMake(CGRectGetHeight(rect_label), CGRectGetHeight(rect_label));
+    rect_label.origin.x = CGRectGetMaxX(rect_acti)+10;
+    rect_label.size.width += CGRectGetWidth(rect_acti)+10;
+    
+    _activityIndicator.frame = rect_acti;
+    _titleLabel.frame = rect_label;
+    self.frame = CGRectMake(0, 0, rect_label.origin.x+rect_label.size.width, rect_label.size.height);
 }
 @end

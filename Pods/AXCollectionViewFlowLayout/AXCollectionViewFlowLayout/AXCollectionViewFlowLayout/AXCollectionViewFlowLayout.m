@@ -26,6 +26,24 @@
 #import "AXCollectionViewFlowLayout.h"
 
 @implementation AXCollectionViewFlowLayout
+- (instancetype)init {
+    if (self = [super init]) {
+        [self initializer];
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        [self initializer];
+    }
+    return self;
+}
+
+- (void)initializer {
+    _scaleBounciness = 0.06;
+}
+
 #pragma mark - Override
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)oldBounds
 {
@@ -38,18 +56,22 @@
     visibleRect.origin = self.collectionView.contentOffset;
     visibleRect.size = self.collectionView.bounds.size;
     
+    NSMutableArray *modifiedArray = [@[] mutableCopy];
+    
     for (UICollectionViewLayoutAttributes* attributes in array) {
-        if (CGRectIntersectsRect(attributes.frame, rect)) {
-            CGFloat distance = CGRectGetMidX(visibleRect) - attributes.center.x;
-            CGFloat normalizedDistance = distance / attributes.size.width;
-            if (ABS(distance) < attributes.size.width) {
-                CGFloat zoom = 1 - 0.06 * ABS(normalizedDistance);
-                attributes.transform3D = CATransform3DMakeScale(zoom, zoom, 1.0);
-                attributes.zIndex = 1;
+        UICollectionViewLayoutAttributes* modifiedAttributes = [attributes copy];
+        if (CGRectIntersectsRect(modifiedAttributes.frame, rect)) {
+            CGFloat distance = CGRectGetMidX(visibleRect) - modifiedAttributes.center.x;
+            CGFloat normalizedDistance = distance / modifiedAttributes.size.width;
+            if (ABS(distance) < modifiedAttributes.size.width) {
+                CGFloat zoom = 1 - _scaleBounciness * ABS(normalizedDistance);
+                modifiedAttributes.transform3D = CATransform3DMakeScale(zoom, zoom, 1.0);
+                modifiedAttributes.zIndex = 1;
             }
         }
+        [modifiedArray addObject:modifiedAttributes];
     }
-    return array;
+    return modifiedArray;
 }
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity

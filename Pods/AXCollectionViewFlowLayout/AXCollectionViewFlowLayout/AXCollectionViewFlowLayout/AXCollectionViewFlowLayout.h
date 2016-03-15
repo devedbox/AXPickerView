@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface AXCollectionViewFlowLayout : UICollectionViewFlowLayout
-
+/// Scale Bounciness. Default is 0.06.
+@property(assign, nonatomic) CGFloat scaleBounciness;
 @end

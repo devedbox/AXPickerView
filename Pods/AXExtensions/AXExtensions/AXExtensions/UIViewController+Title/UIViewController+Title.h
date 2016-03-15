@@ -24,8 +24,10 @@
 - (void)setTitle:(NSString *)title color:(UIColor *)color font:(UIFont *)font;
 @end
 @interface AXTitleView : UIView
+/// Title.
+@property(copy, nonatomic) NSString *title;
 /// Title label
-@property(strong, nonatomic) UILabel *titleLabel;
+@property(readonly, strong, nonatomic) UILabel *titleLabel;
 /// Title activityIndicator
 @property(strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @end
