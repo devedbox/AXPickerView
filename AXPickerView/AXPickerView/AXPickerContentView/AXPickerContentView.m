@@ -129,7 +129,7 @@ NSString *const kAXPickerContentViewReuseIdentifier = @"ax_picker_content_view_r
 
 - (UICollectionView *)collectionView {
     if (_collectionView) return _collectionView;
-    AXPickerCollectionViewFlowLayout *layout = [[AXPickerCollectionViewFlowLayout alloc] init];
+    AXCollectionViewFlowLayout *layout = [[AXCollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     _collectionView.clipsToBounds = NO;

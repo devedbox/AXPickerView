@@ -25,7 +25,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AXPickerCollectionViewCell.h"
-#import "AXPickerCollectionViewFlowLayout.h"
+#import <AXCollectionViewFlowLayout/AXCollectionViewFlowLayout.h>
 
 @class AXPickerContentView;
 

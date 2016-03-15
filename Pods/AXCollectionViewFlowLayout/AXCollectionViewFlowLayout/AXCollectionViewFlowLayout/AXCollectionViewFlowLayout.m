@@ -1,9 +1,9 @@
 //
-//  AXPickerCollectionViewFlowLayout.m
-//  AXPickerView
+//  AXCollectionViewFlowLayout.m
+//  AXCollectionViewFlowLayout
 //
-//  Created by xing Ai on 9/6/15.
-//  Copyright (c) 2015 xing Ai. All rights reserved.
+//  Created by ai on 16/3/15.
+//  Copyright © 2016年 devedbox. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import "AXPickerCollectionViewFlowLayout.h"
+#import "AXCollectionViewFlowLayout.h"
 
-@implementation AXPickerCollectionViewFlowLayout
+@implementation AXCollectionViewFlowLayout
 #pragma mark - Override
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)oldBounds
 {

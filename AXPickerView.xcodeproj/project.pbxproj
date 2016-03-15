@@ -14,13 +14,12 @@
 		01AB00101BFF3A6D00EEDF8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01AB000E1BFF3A6D00EEDF8C /* LaunchScreen.storyboard */; };
 		01AB00231BFF3AF400EEDF8C /* AXImagePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB00191BFF3AF300EEDF8C /* AXImagePickerCell.m */; };
 		01AB00241BFF3AF400EEDF8C /* AXPickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB001C1BFF3AF300EEDF8C /* AXPickerCollectionViewCell.m */; };
-		01AB00251BFF3AF400EEDF8C /* AXPickerCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB001E1BFF3AF300EEDF8C /* AXPickerCollectionViewFlowLayout.m */; };
 		01AB00261BFF3AF400EEDF8C /* AXPickerContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB00201BFF3AF300EEDF8C /* AXPickerContentView.m */; };
 		01AB00271BFF3AF400EEDF8C /* AXPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB00221BFF3AF300EEDF8C /* AXPickerView.m */; };
 		01C0C5E51C02BD2300E0BF99 /* AXTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C0C5E41C02BD2300E0BF99 /* AXTableViewController.m */; };
 		01C0C5E71C02E1C100E0BF99 /* TestImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01C0C5E61C02E1C100E0BF99 /* TestImage.jpg */; };
 		01C0C5F71C030EB500E0BF99 /* AXPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 01C0C5E81C02FBDA00E0BF99 /* AXPickerView.bundle */; };
-		D362E12481D172C96AE67B74 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 386716273A15EB03A34D4523 /* libPods.a */; };
+		9B11C45086A2DA1B0958139F /* libPods-AXPickerView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9B5A66C136CF949660AEFD5 /* libPods-AXPickerView.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,8 +34,6 @@
 		01AB00191BFF3AF300EEDF8C /* AXImagePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXImagePickerCell.m; sourceTree = "<group>"; };
 		01AB001B1BFF3AF300EEDF8C /* AXPickerCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPickerCollectionViewCell.h; sourceTree = "<group>"; };
 		01AB001C1BFF3AF300EEDF8C /* AXPickerCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXPickerCollectionViewCell.m; sourceTree = "<group>"; };
-		01AB001D1BFF3AF300EEDF8C /* AXPickerCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPickerCollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		01AB001E1BFF3AF300EEDF8C /* AXPickerCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXPickerCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		01AB001F1BFF3AF300EEDF8C /* AXPickerContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPickerContentView.h; sourceTree = "<group>"; };
 		01AB00201BFF3AF300EEDF8C /* AXPickerContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXPickerContentView.m; sourceTree = "<group>"; };
 		01AB00211BFF3AF300EEDF8C /* AXPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPickerView.h; sourceTree = "<group>"; };
@@ -47,9 +44,9 @@
 		01C0C5E61C02E1C100E0BF99 /* TestImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TestImage.jpg; sourceTree = "<group>"; };
 		01C0C5E81C02FBDA00E0BF99 /* AXPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AXPickerView.bundle; sourceTree = "<group>"; };
 		01C0C5F61C030C9100E0BF99 /* AXPickerViewConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AXPickerViewConstants.h; sourceTree = "<group>"; };
-		2933C407155FDFB56C435F73 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		386716273A15EB03A34D4523 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		4E214C935F0082BB6510A659 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		527D31FBB8A436205F384156 /* Pods-AXPickerView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AXPickerView.release.xcconfig"; path = "Pods/Target Support Files/Pods-AXPickerView/Pods-AXPickerView.release.xcconfig"; sourceTree = "<group>"; };
+		D05707D41196567E52EA4C9A /* Pods-AXPickerView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AXPickerView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AXPickerView/Pods-AXPickerView.debug.xcconfig"; sourceTree = "<group>"; };
+		F9B5A66C136CF949660AEFD5 /* libPods-AXPickerView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AXPickerView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D362E12481D172C96AE67B74 /* libPods.a in Frameworks */,
+				9B11C45086A2DA1B0958139F /* libPods-AXPickerView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,8 +88,6 @@
 			children = (
 				01AB001B1BFF3AF300EEDF8C /* AXPickerCollectionViewCell.h */,
 				01AB001C1BFF3AF300EEDF8C /* AXPickerCollectionViewCell.m */,
-				01AB001D1BFF3AF300EEDF8C /* AXPickerCollectionViewFlowLayout.h */,
-				01AB001E1BFF3AF300EEDF8C /* AXPickerCollectionViewFlowLayout.m */,
 				01AB001F1BFF3AF300EEDF8C /* AXPickerContentView.h */,
 				01AB00201BFF3AF300EEDF8C /* AXPickerContentView.m */,
 			);
@@ -104,8 +99,8 @@
 			children = (
 				01ABFFFF1BFF3A6D00EEDF8C /* AXPickerView */,
 				01ABFFFE1BFF3A6D00EEDF8C /* Products */,
-				970B38AB018F89471EE68B95 /* Pods */,
-				8DEAE7EA47AAF329D26E2E4A /* Frameworks */,
+				24B62369DBF61011A13F3F5F /* Pods */,
+				4265925813FE91ADCC82DD07 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,21 +130,21 @@
 			path = AXPickerView;
 			sourceTree = "<group>";
 		};
-		8DEAE7EA47AAF329D26E2E4A /* Frameworks */ = {
+		24B62369DBF61011A13F3F5F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				386716273A15EB03A34D4523 /* libPods.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		970B38AB018F89471EE68B95 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2933C407155FDFB56C435F73 /* Pods.debug.xcconfig */,
-				4E214C935F0082BB6510A659 /* Pods.release.xcconfig */,
+				D05707D41196567E52EA4C9A /* Pods-AXPickerView.debug.xcconfig */,
+				527D31FBB8A436205F384156 /* Pods-AXPickerView.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		4265925813FE91ADCC82DD07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F9B5A66C136CF949660AEFD5 /* libPods-AXPickerView.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,12 +154,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 01AB00141BFF3A6D00EEDF8C /* Build configuration list for PBXNativeTarget "AXPickerView" */;
 			buildPhases = (
-				E88935B3C455ACB11C85B4C0 /* Check Pods Manifest.lock */,
+				9179E016D4E9275C75790E59 /* Check Pods Manifest.lock */,
 				01ABFFF91BFF3A6D00EEDF8C /* Sources */,
 				01ABFFFA1BFF3A6D00EEDF8C /* Frameworks */,
 				01ABFFFB1BFF3A6D00EEDF8C /* Resources */,
-				4C783AFA813756489B81A552 /* Embed Pods Frameworks */,
-				A585D0EA237BC4132D8D85FF /* Copy Pods Resources */,
+				EA61D72571C1739EB995C914 /* Embed Pods Frameworks */,
+				5E4419BF0260A693957B4A2D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -223,22 +218,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4C783AFA813756489B81A552 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A585D0EA237BC4132D8D85FF /* Copy Pods Resources */ = {
+		5E4419BF0260A693957B4A2D /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -250,10 +230,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AXPickerView/Pods-AXPickerView-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E88935B3C455ACB11C85B4C0 /* Check Pods Manifest.lock */ = {
+		9179E016D4E9275C75790E59 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -268,6 +248,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		EA61D72571C1739EB995C914 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AXPickerView/Pods-AXPickerView-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -279,7 +274,6 @@
 				01AB00051BFF3A6D00EEDF8C /* AppDelegate.m in Sources */,
 				01AB00271BFF3AF400EEDF8C /* AXPickerView.m in Sources */,
 				01C0C5E51C02BD2300E0BF99 /* AXTableViewController.m in Sources */,
-				01AB00251BFF3AF400EEDF8C /* AXPickerCollectionViewFlowLayout.m in Sources */,
 				01AB00241BFF3AF400EEDF8C /* AXPickerCollectionViewCell.m in Sources */,
 				01AB00261BFF3AF400EEDF8C /* AXPickerContentView.m in Sources */,
 				01AB00021BFF3A6D00EEDF8C /* main.m in Sources */,
@@ -390,7 +384,7 @@
 		};
 		01AB00151BFF3A6D00EEDF8C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2933C407155FDFB56C435F73 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = D05707D41196567E52EA4C9A /* Pods-AXPickerView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AXPickerView/Info.plist;
@@ -403,7 +397,7 @@
 		};
 		01AB00161BFF3A6D00EEDF8C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4E214C935F0082BB6510A659 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 527D31FBB8A436205F384156 /* Pods-AXPickerView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AXPickerView/Info.plist;
