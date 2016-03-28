@@ -64,6 +64,9 @@ typedef NS_ENUM(NSInteger, AXPickerViewStyle){
 @protocol AXPickerViewDelegate;
 @protocol AXPickerViewDataSource;
 
+@class AXPickerViewItemConfiguration;
+@class AXPickerViewSeparatorConfiguration;
+
 NS_CLASS_AVAILABLE_IOS(7_0)
 @interface AXPickerView : UIView
 /// A view attaching the picker view
@@ -71,13 +74,13 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 /// Title of picker view
 @property(copy,   nonatomic) NSString *title;
 /// Titles of buttons in picker view
-@property(copy,   nonatomic) NSArray *items;
+@property(copy,   nonatomic) NSArray<NSString *> *items;
 /// Title label font of buttons
 @property(strong, nonatomic) UIFont *itemFont UI_APPEARANCE_SELECTOR;
 /// Font of title label
 @property(strong, nonatomic) UIFont *titleFont UI_APPEARANCE_SELECTOR;
 /// Configurations of buttons
-@property(copy,   nonatomic) NSArray *itemConfigs;
+@property(copy,   nonatomic) NSArray<AXPickerViewItemConfiguration *> *itemConfigs;
 /// Title label font of cancel button
 @property(strong, nonatomic) UIFont *cancelFont UI_APPEARANCE_SELECTOR;
 /// A custom view below the title label
@@ -93,7 +96,7 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 /// Background color of separator view
 @property(strong, nonatomic) UIColor *separatorColor UI_APPEARANCE_SELECTOR;
 /// Configurations of separator view
-@property(copy,   nonatomic) NSArray *separatorConfigs;
+@property(copy,   nonatomic) NSArray<AXPickerViewSeparatorConfiguration *> *separatorConfigs;
 /// Title label color of cancel button
 @property(strong, nonatomic) UIColor *cancelTextColor UI_APPEARANCE_SELECTOR;
 /// Title label color of complete button
