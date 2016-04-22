@@ -23,14 +23,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#ifdef kCFCoreFoundationVersionNumber_iOS_8_0
-#define kCFCoreFoundationVersionNumber_iOS_8_0 11400.1
-#endif
-
 #import <objc/runtime.h>
 #import "AXPickerView.h"
 #import "AXImagePickerCell.h"
 #import "AXPickerViewConstants.h"
+#import <AXExtensions/AXScrollView.h>
 #import <AXExtensions/PHAsset+Image.h>
 #import <AXExtensions/ALAsset+Image.h>
 #import <AXPracticalHUD/AXPracticalHUD.h>
@@ -1128,12 +1125,14 @@
     collectionView.delegate = pickerView;
     collectionView.dataSource = pickerView;
     pickerView.customView = collectionView;
+    /*
     AXPracticalHUD *hud = [AXPracticalHUD showHUDInView:collectionView animated:YES];
     hud.translucent = YES;
     hud.lockBackground = YES;
     hud.dimBackground = YES;
     hud.removeFromSuperViewOnHide = YES;
     [hud hideAnimated:YES afterDelay:0.5 completion:nil];
+     */
     [pickerView enumerateAssetsGroupCompletion:nil];
     if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
         [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:pickerView];
@@ -1446,9 +1445,21 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
-        return self.photoAssetsResult ? self.photoAssetsResult.count : 0;
+        NSInteger count = self.photoAssetsResult ? self.photoAssetsResult.count : 0;
+        if (count > 0) {
+            [collectionView setIndicatorViewEnabled:NO];
+        } else {
+            [collectionView setIndicatorViewEnabled:YES];
+        }
+        return count;
     } else {
-        return self.photoAssets ? self.photoAssets.count : 0;
+        NSInteger count = self.photoAssets ? self.photoAssets.count : 0;
+        if (count > 0) {
+            [collectionView setIndicatorViewEnabled:NO];
+        } else {
+            [collectionView setIndicatorViewEnabled:YES];
+        }
+        return count;
     }
 }
 
