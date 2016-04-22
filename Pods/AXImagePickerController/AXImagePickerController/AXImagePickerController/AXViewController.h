@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AXPracticalHUD/AXPracticalHUD.h>
 #import "AXImagePickerController.h"
 
 @protocol AXImagePickerControllerDelegate;
 
 @interface AXViewController : UIViewController
 /// Title label
-@property(strong, nonatomic) UILabel *titleLabel;
+@property(strong, nonatomic) UILabel *titleLabel __deprecated;
 /// Count label
 @property(strong, nonatomic) UILabel *countLabel;
 /// Selection color

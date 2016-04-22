@@ -7,10 +7,7 @@
 //
 
 #import "AXAlbumTableViewCell.h"
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_8_0
-#define kCFCoreFoundationVersionNumber_iOS_8_0 1140.1
-#endif
+#import "AXImagePickerControllerMacro.h"
 
 @interface AXAlbumTableViewCell()
 /// Effect view

@@ -9,10 +9,8 @@
 #import "AXAlbumViewController.h"
 #import "AXPhotoViewController.h"
 #import "AXAlbumTableViewCell.h"
+#import "AXImagePickerControllerMacro.h"
 
-#ifndef kCFCoreFoundationVersionNumber_iOS_8_0
-#define kCFCoreFoundationVersionNumber_iOS_8_0 1140.1
-#endif
 @interface AXAlbumViewController()
 {
     ALAssetsLibrary *_albumLibrary;
@@ -43,7 +41,7 @@ static NSString *kAXAlbumTableViewCellReuseIdentifier = @"__ax_album_tableViewCe
     
     [self.view addSubview:self.albumView];
     if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_8_0) {
-        [self loadGroupsCompletion:nil];
+        [self loadGroupsCompletion:NULL];
     }
 }
 
@@ -153,20 +151,24 @@ static NSString *kAXAlbumTableViewCellReuseIdentifier = @"__ax_album_tableViewCe
                                          if (group && [group numberOfAssets] > 0) {
                                              [groups addObject:group];
                                          }
-                                         if (*stop == YES) {
-                                             [groups sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                                                 if ([obj1 numberOfAssets] >= [obj2 numberOfAssets]) {
-                                                     return NSOrderedAscending;
-                                                 } else {
-                                                     return NSOrderedDescending;
-                                                 }
-                                             }];
-                                             self.albumGroups = groups;
+                                         [groups sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                                             if ([obj1 numberOfAssets] >= [obj2 numberOfAssets]) {
+                                                 return NSOrderedAscending;
+                                             } else {
+                                                 return NSOrderedDescending;
+                                             }
+                                         }];
+                                         self.albumGroups = groups;
+                                         if (completion) {
+                                             completion();
                                          }
                                      } failureBlock:^(NSError *error) {
 #if DEBUG
                                          NSLog(@"error: %@", error);
 #endif
+                                         if (completion) {
+                                             completion();
+                                         }
                                      }];
 }
 

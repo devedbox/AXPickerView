@@ -18,7 +18,7 @@
     UIBarButtonItem *_sendItem;
 }
 /// Title label
-@property(strong, nonatomic) UILabel *titleLabel;
+@property(strong, nonatomic) UILabel *titleLabel __deprecated;
 @end
 
 @implementation AXPreviewController
@@ -53,6 +53,10 @@
     
     [self.navigationController.navigationBar setSeparatorHidden:YES];
     [self.navigationController.toolbar setSeparatorHidden:YES];
+    
+    if (self.navigationController.navigationBar.titleTextAttributes == nil) {
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:self.selectionTintColor?self.selectionTintColor:[UIColor blackColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:19]}];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -65,9 +69,7 @@
 #pragma mark - Override
 - (void)setTitle:(NSString *)title {
     [super setTitle:title];
-    self.titleLabel.text = self.title;
-    [_titleLabel sizeToFit];
-    self.navigationItem.titleView = _titleLabel;
+    [self.navigationItem setTitle:title];
 }
 #pragma mark - Public
 + (instancetype)defaultController {

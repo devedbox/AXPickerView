@@ -15,7 +15,10 @@
     AXAssetsImageController *controller = [[AXAssetsImageController alloc] init];
     controller.asset = asset;
     if (![asset isKindOfClass:[PHAsset class]] && ![asset isKindOfClass:[ALAsset class]]) return nil;
-    controller.imageView.image = [asset valueForKey:@"image"];
+    UIImage *image = [asset valueForKey:@"image"];
+    if (image) {
+        controller.imageView.image = image;
+    }
     return controller;
 }
 @end

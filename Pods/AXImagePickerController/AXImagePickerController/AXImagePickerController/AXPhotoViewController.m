@@ -8,19 +8,8 @@
 
 #import "AXPhotoViewController.h"
 #import "AXPhotoCollectionViewCell.h"
+#import "AXImagePickerControllerMacro.h"
 
-#ifndef kCFCoreFoundationVersionNumber_iOS_8_0
-#define kCFCoreFoundationVersionNumber_iOS_8_0 1140.1
-#endif
-#ifndef kAXPhotoCollectionViewCellReuseIdentifier
-#define kAXPhotoCollectionViewCellReuseIdentifier @"__ax_photo_collectionViewCell"
-#endif
-#ifndef kAXPhotoCollectionViewCellPadding
-#define kAXPhotoCollectionViewCellPadding 2.0
-#endif
-#ifndef kAXPhotoCollectionViewSize
-#define kAXPhotoCollectionViewSize (CGSizeMake((self.view.bounds.size.width - kAXPhotoCollectionViewCellPadding * 4) / 3, (self.view.bounds.size.width - kAXPhotoCollectionViewCellPadding * 2) / 3))
-#endif
 @interface AXPhotoViewController()
 {
     UICollectionView *_photoView;
@@ -57,15 +46,62 @@
         [_photoView reloadData];
     } else {
         if (_assetsGroup) {
+            AXPracticalHUD *hud = [AXPracticalHUD showHUDInView:self.view animated:YES];
+            hud.translucent = YES;
             NSMutableArray *assets = [NSMutableArray array];
             [_assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
                 if (result) {
                     [assets insertObject:result atIndex:0];
                 }
-                if (*stop == YES) {
-                    _assets = [assets copy];
-                    [_photoView reloadData];
+                if (index == [_assetsGroup numberOfAssets]-1) {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        AXImagePickerController *imagePickerController = self.imagePickerController;
+                        NSArray *selectedAsset = imagePickerController.selectedImageInfo[self.title];
+                        NSMutableArray *indexs = [@[] mutableCopy];
+                        for (ALAsset *asset in selectedAsset) {
+                            [indexs addObject:@([assets indexOfObjectPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                                if ([[obj valueForProperty:ALAssetPropertyURLs] isEqual:[asset valueForProperty:ALAssetPropertyURLs]]) {
+                                    *stop = YES;
+                                    return YES;
+                                } else {
+                                    return NO;
+                                }
+                            }])];
+                        }
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [hud hideAnimated:YES afterDelay:0.25 completion:^{
+                                _assets = [assets copy];
+                                [_photoView reloadData];
+                                for (NSNumber *index in indexs) {
+                                    [_photoView selectItemAtIndexPath:[NSIndexPath indexPathForItem:[index integerValue]
+                                                                                          inSection:0]
+                                                             animated:NO
+                                                       scrollPosition:UICollectionViewScrollPositionNone];
+                                }
+                            }];
+                        });
+                    });
                 }
+            }];
+        } else {
+            AXPracticalHUD *hud = [AXPracticalHUD showHUDInView:self.view animated:YES];
+            hud.translucent = YES;
+            [self.albumViewController loadGroupsCompletion:^{
+                _assetsGroup = self.albumViewController.topAlbumInfo;
+                self.title = [_assetsGroup valueForProperty:ALAssetsGroupPropertyName];
+                NSMutableArray *assets = [NSMutableArray array];
+                [_assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                    if (result) {
+                        [assets insertObject:result atIndex:0];
+                    }
+                    if (index == [_assetsGroup numberOfAssets]-1) {
+                        _assets = [assets copy];
+                        [hud hideAnimated:YES afterDelay:0.25 completion:^{
+                            [_photoView reloadData];
+                        }];
+                    }
+                }];
             }];
         }
     }
@@ -74,15 +110,17 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [_photoView reloadData];
-    AXImagePickerController *imagePickerController = self.imagePickerController;
-    NSArray *selectedAsset = imagePickerController.selectedImageInfo[self.title];
-    for (id asset in selectedAsset) {
-        NSInteger row = (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) ? [_photos indexOfObject:asset] : [_assets indexOfObject:asset];
-        [_photoView selectItemAtIndexPath:[NSIndexPath indexPathForItem:row
-                                                              inSection:0]
-                                 animated:NO
-                           scrollPosition:UICollectionViewScrollPositionNone];
+    if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
+        [_photoView reloadData];
+        AXImagePickerController *imagePickerController = self.imagePickerController;
+        NSArray *selectedAsset = imagePickerController.selectedImageInfo[self.title];
+        for (id asset in selectedAsset) {
+            NSInteger row = [_photos indexOfObject:asset];
+            [_photoView selectItemAtIndexPath:[NSIndexPath indexPathForItem:row
+                                                                  inSection:0]
+                                     animated:NO
+                               scrollPosition:UICollectionViewScrollPositionNone];
+        }
     }
 }
 #pragma mark - Getters

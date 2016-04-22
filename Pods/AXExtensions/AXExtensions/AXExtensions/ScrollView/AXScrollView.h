@@ -34,7 +34,9 @@
 - (void)endRefreshFooter;
 @end
 
-@interface UIScrollView (PlaceHolder)
+IB_DESIGNABLE @interface UIScrollView (PlaceHolder)
+/// Indicator view enabled.
+@property(assign, nonatomic) BOOL indicatorViewEnabled;
 /// Place hodler string content.
 @property(copy, nonatomic) IBInspectable NSString *placeHolderContent;
 /// Place holder label font. Default is system 26pt.

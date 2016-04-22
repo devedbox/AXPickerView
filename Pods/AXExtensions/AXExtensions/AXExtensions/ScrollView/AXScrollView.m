@@ -98,6 +98,8 @@
 @end
 
 @interface UIScrollView ()
+/// Place holder indicator view.
+@property(readonly, strong, nonatomic) UIActivityIndicatorView *indicatorView;
 @property(readonly, strong, nonatomic) UILabel *placeHolderLabel;
 @property(readonly, strong, nonatomic) UIImageView *placeHolderImageView;
 @end
@@ -122,6 +124,26 @@
 
 - (UIImage *)placeHolderImage {
     return self.placeHolderImageView.image;
+}
+
+- (BOOL)indicatorViewEnabled {
+    return self.indicatorView.isAnimating;
+}
+
+- (void)setIndicatorViewEnabled:(BOOL)indicatorViewEnabled
+{
+    if (indicatorViewEnabled) {
+        self.placeHolderLabel.hidden = YES;
+        self.placeHolderImageView.hidden = YES;
+        [self insertSubview:self.indicatorView atIndex:0];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:self.indicatorView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:self.placeHolderOffset.x]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:self.indicatorView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:self.placeHolderOffset.y]];
+        [self.indicatorView startAnimating];
+    } else {
+        self.placeHolderImageView.hidden = NO;
+        self.placeHolderLabel.hidden = NO;
+        [self.indicatorView removeFromSuperview];
+    }
 }
 
 - (void)setPlaceHolderContent:(NSString *)placeHolderContent {
@@ -203,5 +225,20 @@
         objc_setAssociatedObject(self, _cmd, imageView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return imageView;
+}
+
+- (UIActivityIndicatorView *)indicatorView {
+    UIActivityIndicatorView *indicatorView = objc_getAssociatedObject(self, _cmd);
+    if (!indicatorView) {
+        indicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 88.0, 88.0)];
+        indicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        indicatorView.hidesWhenStopped = YES;
+        indicatorView.translatesAutoresizingMaskIntoConstraints = NO;
+        indicatorView.color = [UIColor grayColor];
+        [indicatorView addConstraint:[NSLayoutConstraint constraintWithItem:indicatorView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:88.0]];
+        [indicatorView addConstraint:[NSLayoutConstraint constraintWithItem:indicatorView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:88.0]];
+        objc_setAssociatedObject(self, _cmd, indicatorView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return indicatorView;
 }
 @end

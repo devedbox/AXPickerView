@@ -8,13 +8,9 @@
 
 #import "AXViewController.h"
 #import "AXPreviewController.h"
-#import <AXPracticalHUD/AXPracticalHUD.h>
+#import "AXImagePickerControllerMacro.h"
 #import <AXExtensions/UIToolbar+Separator_hidden.h>
 #import <AXExtensions/UINavigationBar+Separator_hidden.h>
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_8_0
-#define kCFCoreFoundationVersionNumber_iOS_8_0 1140.1
-#endif
 
 @interface AXViewController()
 /// Background effect view
@@ -44,7 +40,9 @@
     navigationController.toolbar.barTintColor = nil;
     [navigationController.navigationBar setSeparatorHidden:NO];
     [navigationController.toolbar setSeparatorHidden:NO];
-    self.titleLabel = nil;
+    if (navigationController.navigationBar.titleTextAttributes == nil) {
+        [navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:self.selectionTintColor?self.selectionTintColor:[UIColor blackColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:19]}];
+    }
     [self setTitle:self.title];
     [self updateSelectionInfo];
 }
@@ -122,7 +120,9 @@
 
 - (void)setSelectionTintColor:(UIColor *)selectionTintColor {
     _selectionTintColor = selectionTintColor;
-    self.titleLabel.textColor = selectionTintColor;
+    if (self.navigationController.navigationBar.titleTextAttributes == nil) {
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:selectionTintColor?selectionTintColor:[UIColor blackColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:19]}];
+    }
     self.navigationController.navigationBar.tintColor = self.selectionTintColor;
     self.navigationController.toolbar.tintColor = self.selectionTintColor;
 }
@@ -130,9 +130,7 @@
 #pragma mark - Override
 - (void)setTitle:(NSString *)title {
     [super setTitle:title];
-    self.titleLabel.text = title;
-    [_titleLabel sizeToFit];
-    self.navigationItem.titleView = _titleLabel;
+    [self.navigationItem setTitle:title];
 }
 
 #pragma mark - Actions
@@ -141,9 +139,7 @@
         AXImagePickerController *imagePickerController = self.imagePickerController;
         id delegate = imagePickerController.delegate;
         if (![delegate conformsToProtocol:NSProtocolFromString(@"AXImagePickerControllerDelegate")]) {
-            return;
-        }
-        if (delegate && [delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
+        } else if (delegate && [delegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
             [delegate performSelector:@selector(imagePickerControllerDidCancel:) withObject:imagePickerController];
         }
         [self dismissViewControllerAnimated:YES completion:nil];

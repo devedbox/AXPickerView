@@ -9,10 +9,8 @@
 #import "AXImagePickerController.h"
 #import "AXAlbumViewController.h"
 #import "AXPhotoViewController.h"
+#import "AXImagePickerControllerMacro.h"
 
-#ifndef kCFCoreFoundationVersionNumber_iOS_8_0
-#define kCFCoreFoundationVersionNumber_iOS_8_0 1140.1
-#endif
 @interface AXImagePickerController()
 {
     AXAlbumViewController *_albumsViewController;
@@ -178,6 +176,7 @@
     } else {
         ALAssetsGroup *group = self.albumsViewController.topAlbumInfo;
         _photoViewController = [[AXPhotoViewController alloc] initWithAssetsGroup:group];
+        _photoViewController.albumViewController = _albumsViewController;
         _photoViewController.title = [group valueForProperty:ALAssetsGroupPropertyName];
     }
     return _photoViewController;

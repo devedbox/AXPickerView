@@ -23,6 +23,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+#ifdef kCFCoreFoundationVersionNumber_iOS_8_0
+#define kCFCoreFoundationVersionNumber_iOS_8_0 11400.1
+#endif
+
 #import <objc/runtime.h>
 #import "AXPickerView.h"
 #import "AXImagePickerCell.h"
@@ -702,27 +706,31 @@
         originY += _customView.bounds.size.height + _customViewInsets.top + _customViewInsets.bottom;
     }
     button.frame = CGRectMake(0, originY, self.bounds.size.width, kAXPickerToolBarHeight);
-    button.tag = ++index;
+    button.tag = index+1;
     
     // Add targets
     [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     // Add separator layers
     UIEdgeInsets __block insets = _separatorInsets;
+    UIColor *__block separatorColor = kAXDefaultSeparatorColor;
+    CGFloat __block _height = .5;
     [_separatorConfigs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if ([obj isKindOfClass:[AXPickerViewSeparatorConfiguration class]]) {
             AXPickerViewSeparatorConfiguration *config = (AXPickerViewSeparatorConfiguration *)obj;
             if (index == config.index) {
                 *stop = YES;
                 insets = config.insets;
+                separatorColor = config.color;
+                _height = height;
             }
         }
     }];
     if (index == 0) {
         if (!_customView) {
-            [button.layer addSublayer:[self separatorWithHeight:0.5 color:_separatorColor ? _separatorColor : kAXDefaultSeparatorColor insets:insets atIndex:0]];
+            [button.layer addSublayer:[self separatorWithHeight:_height color:separatorColor ? separatorColor : (_separatorColor?_separatorColor:kAXDefaultSeparatorColor) insets:insets atIndex:0]];
         }
     } else {
-        [button.layer addSublayer:[self separatorWithHeight:0.5 color:_separatorColor ? _separatorColor : kAXDefaultSeparatorColor insets:insets atIndex:0]];
+        [button.layer addSublayer:[self separatorWithHeight:_height color:separatorColor ? separatorColor : (_separatorColor?_separatorColor:kAXDefaultSeparatorColor) insets:insets atIndex:0]];
     }
     return button;
 }
@@ -731,7 +739,7 @@
     CALayer *layer = [CALayer layer];
     layer.frame = CGRectMake(insets.left, kAXPickerToolBarHeight * index, self.bounds.size.width - (insets.left + insets.right), height);
     layer.backgroundColor = color.CGColor;
-    layer.tag = ++index;
+    layer.tag = index+1;
     return layer;
 }
 
@@ -798,7 +806,7 @@
             [_separatorConfigs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 if ([obj isKindOfClass:[AXPickerViewSeparatorConfiguration class]]) {
                     AXPickerViewSeparatorConfiguration *config = (AXPickerViewSeparatorConfiguration *)obj;
-                    if (config.index == index - 1) {
+                    if (config.index == index-1) {
                         *stop = YES;
                         if (separator) {
                             CGRect rect = separator.frame;
@@ -806,7 +814,7 @@
                             rect.size.width = self.bounds.size.width - (config.insets.left + config.insets.right);
                             rect.size.height = config.height;
                             separator.frame = rect;
-                            separator.backgroundColor = config.color.CGColor ? config.color.CGColor : kAXDefaultSeparatorColor.CGColor;
+                            separator.backgroundColor = config.color.CGColor ? config.color.CGColor : (_separatorColor.CGColor?_separatorColor.CGColor:kAXDefaultSeparatorColor.CGColor);
                         }
                     }
                 }
@@ -824,7 +832,7 @@
             [_itemConfigs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 if ([obj isKindOfClass:[AXPickerViewItemConfiguration class]]) {
                     AXPickerViewItemConfiguration *config = (AXPickerViewItemConfiguration *)obj;
-                    if (config.index == index - 1) {
+                    if (config.index == index-1) {
                         *stop = YES;
                         button.tintColor = config.tintColor;
                         button.titleLabel.font = config.textFont;
@@ -1416,10 +1424,10 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
-        PHAsset *asset = [self.photoAssetsResult objectAtIndex:indexPath.row];
+        PHAsset *asset = [self.photoAssetsResult objectAtIndex:indexPath.item];
         return [self rightSizeWithOriginalSize:CGSizeMake(asset.pixelWidth, asset.pixelHeight) rightHeight:kImagePickerRightHeight];
     } else {
-        ALAsset *asset = [self.photoAssets objectAtIndex:indexPath.row];
+        ALAsset *asset = [self.photoAssets objectAtIndex:indexPath.item];
         return [self rightSizeWithOriginalSize:asset.defaultRepresentation.dimensions rightHeight:kImagePickerRightHeight];
     }
 }
@@ -1448,12 +1456,16 @@
     AXImagePickerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kImagePickerReuseIdentifier
                                                                         forIndexPath:indexPath];
     if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
-        PHAsset *asset = [self.photoAssetsResult objectAtIndex:indexPath.row];
+        PHAsset *asset = [self.photoAssetsResult objectAtIndex:indexPath.item];
         CGSize targetSize = [self rightSizeWithOriginalSize:CGSizeMake(asset.pixelWidth, asset.pixelHeight) rightHeight:kImagePickerRightHeight];
+        PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+        options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+        options.resizeMode = PHImageRequestOptionsResizeModeFast;
+        options.synchronous = YES;
         [[PHImageManager defaultManager] requestImageForAsset:asset
                                                    targetSize:CGSizeMake(targetSize.width * 2, targetSize.height * 2)
                                                   contentMode:PHImageContentModeAspectFill
-                                                      options:nil
+                                                      options:options
                                                 resultHandler:^(UIImage *result, NSDictionary *info) {
                                                     if (result) {
                                                         cell.imageView.image = result;
@@ -1461,7 +1473,7 @@
                                                 }];
     } else {
         ALAsset *asset = [self.photoAssets objectAtIndex:indexPath.row];
-        cell.imageView.image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
+        cell.imageView.image = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
     }
 //    cell.label.textColor = self.selectionTintColor ? self.selectionTintColor : kAXDefaultSelectedColor;
     cell.tintColor = self.selectionTintColor ? self.selectionTintColor : kAXDefaultSelectedColor;

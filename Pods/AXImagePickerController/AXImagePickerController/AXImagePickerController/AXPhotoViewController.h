@@ -7,6 +7,7 @@
 //
 
 #import "AXViewController.h"
+#import "AXAlbumViewController.h"
 
 @interface AXPhotoViewController : AXViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 /// Assets library
@@ -18,9 +19,11 @@
 /// Photos
 @property(readonly, strong, nonatomic) id photos NS_AVAILABLE_IOS(7_0);
 /// Assets of ALAsset
-@property(readonly, copy, nonatomic) NSArray *assets NS_DEPRECATED_IOS(7_0, 8_0);
+@property(readonly, copy, nonatomic) NSArray __block *assets NS_DEPRECATED_IOS(7_0, 8_0);
 /// Photo view
 @property(readonly, strong, nonatomic) UICollectionView *photoView;
+/// Album view controller.
+@property(weak, nonatomic) AXAlbumViewController *albumViewController;
 
 - (instancetype)initWithPhotoCollection:(PHAssetCollection *)collection NS_AVAILABLE_IOS(8_0);
 - (instancetype)initWithAssetsGroup:(ALAssetsGroup *)group NS_DEPRECATED_IOS(7_0, 8_0);
