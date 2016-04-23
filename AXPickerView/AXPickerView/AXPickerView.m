@@ -788,6 +788,7 @@
     [self resizingCustomView];
     [self sizeToFit];
     [self setNeedsDisplay];
+    [self resizingSelfAnimated:NO];
     
     _customView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
 }
