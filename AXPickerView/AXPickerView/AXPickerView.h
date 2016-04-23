@@ -122,6 +122,10 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 ///
 /// @return an instance of AXPickerView
 - (instancetype)initWithStyle:(AXPickerViewStyle)style items:(NSArray *)items;
+
+- (void)showAnimated:(BOOL)animated completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing __deprecated_msg("Using `show:completion:revoking:executing:` instead.");
+- (void)hideAnimated:(BOOL)animated completion:(void(^)())completion __deprecated_msg("Using `hide:completion:` instead.");
+
 /// Show picker view in the view that seted before with animation and blocks
 /// @discusstion If animated is YES, picker view will show with a default animation. Otherwise, picker view show without animation
 ///              When style of picker view is one of DatePicker and CommonPicker, completion will be executed if there has one when picker view has a completion action.
@@ -132,12 +136,12 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 /// @param completion A completion call back block when competed.
 /// @param revoking   A revoking call back block when revoked.
 /// @param executing  Execute a block when selected item.
-- (void)showAnimated:(BOOL)animated completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing;
+- (void)show:(BOOL)animated completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing;
 /// Hide picker view from superview, remove from super view if removeFromSuperViewOnHide is YES.
 ///
 /// @param animated   A boolean value deciding how to hide.
 /// @param completion A completion block when finished hiding.
-- (void)hideAnimated:(BOOL)animated completion:(void(^)())completion;
+- (void)hide:(BOOL)animated completion:(void(^)())completion;
 @end
 
 @interface AXPickerView(DatePicker)

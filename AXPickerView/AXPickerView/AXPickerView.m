@@ -61,11 +61,11 @@
 @property(copy, nonatomic) AXPickerViewExecuting executing;
 @end
 
-@interface CALayer (Tag)
+@interface AXLayer: CALayer
 @property (assign, nonatomic) NSInteger tag;
 @end
 
-@implementation CALayer (Tag)
+@implementation AXLayer
 - (void)setTag:(NSInteger)tag {
     objc_setAssociatedObject(self,
                              @selector(tag),
@@ -126,7 +126,7 @@
     _removeFromSuperViewOnHide = YES;
     _scaleBackgroundView = YES;
     
-    self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     self.backgroundColor = [UIColor clearColor];
     self.tintColor = kAXDefaultTintColor;
     
@@ -189,8 +189,8 @@
         case AXPickerViewStyleDatePicker:
         {
             [self.layer.sublayers enumerateObjectsUsingBlock:^(CALayer *obj, NSUInteger idx, BOOL *stop) {
-                if ([obj isKindOfClass:[CALayer class]]) {
-                    if ([obj tag] >= 0) {
+                if ([obj isKindOfClass:[AXLayer class]]) {
+                    if ([obj valueForKey:@"tag"] > 0) {
                         *stop = YES;
                         [obj removeFromSuperlayer];
                     }
@@ -220,8 +220,8 @@
         case AXPickerViewStyleCommonPicker:
         {
             [self.layer.sublayers enumerateObjectsUsingBlock:^(CALayer *obj, NSUInteger idx, BOOL *stop) {
-                if ([obj isKindOfClass:[CALayer class]]) {
-                    if ([obj tag] >= 0) {
+                if ([obj isKindOfClass:[AXLayer class]]) {
+                    if ([obj valueForKey:@"tag"] > 0) {
                         *stop = YES;
                         [obj removeFromSuperlayer];
                     }
@@ -512,6 +512,7 @@
     _backgroundView = [[AXPickerContentView alloc] initWithFrame:CGRectZero];
     _backgroundView.delegate = self;
     _backgroundView.dataSource = self;
+    _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     return _backgroundView;
 }
 
@@ -533,7 +534,10 @@
 }
 #pragma mark - Public_interface
 
-- (void)showAnimated:(BOOL)animated completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing {
+- (void)showAnimated:(BOOL)animated completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing {}
+
+- (void)show:(BOOL)animated completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing
+{
     if (!_view) return;
     
     // Prepare animating
@@ -603,7 +607,9 @@
     }
 }
 
-- (void)hideAnimated:(BOOL)animated completion:(void (^)())completion {
+- (void)hideAnimated:(BOOL)animated completion:(void (^)())completion {}
+
+- (void)hide:(BOOL)animated completion:(void (^)())completion {
     if (!self.superview) return;
     
     // Prepare animating
@@ -687,15 +693,15 @@
         if ([obj isKindOfClass:[AXPickerViewItemConfiguration class]]) {
             AXPickerViewItemConfiguration *config = (AXPickerViewItemConfiguration *)obj;
             if (index == config.index) {
-                *stop = YES;
                 aItemColor = config.tintColor;
                 aItemFont = config.textFont;
+                *stop = YES;
             }
         }
     }];
     
-    button.tintColor = aItemColor ? aItemColor : (_itemTintColor ? _itemTintColor : self.tintColor);
-    button.titleLabel.font = aItemFont ? aItemFont : _itemFont;
+    button.tintColor = aItemColor ? aItemColor : (_itemTintColor?_itemTintColor:self.tintColor);
+    button.titleLabel.font = aItemFont ? aItemFont : (_itemFont?_itemFont:[UIFont systemFontOfSize:18]);
     
     // Origin y
     CGFloat originY = kAXPickerToolBarHeight * (self.title.length > 0 ? index + 1 : index);
@@ -709,7 +715,7 @@
     [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     // Add separator layers
     UIEdgeInsets __block insets = _separatorInsets;
-    UIColor *__block separatorColor = kAXDefaultSeparatorColor;
+    UIColor *__block separatorColor = nil;
     CGFloat __block _height = .5;
     [_separatorConfigs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if ([obj isKindOfClass:[AXPickerViewSeparatorConfiguration class]]) {
@@ -718,10 +724,11 @@
                 *stop = YES;
                 insets = config.insets;
                 separatorColor = config.color;
-                _height = height;
+                _height = config.height;
             }
         }
     }];
+
     if (index == 0) {
         if (!_customView) {
             [button.layer addSublayer:[self separatorWithHeight:_height color:separatorColor ? separatorColor : (_separatorColor?_separatorColor:kAXDefaultSeparatorColor) insets:insets atIndex:0]];
@@ -732,8 +739,8 @@
     return button;
 }
 
-- (CALayer *)separatorWithHeight:(CGFloat)height color:(UIColor *)color insets:(UIEdgeInsets)insets atIndex:(NSInteger)index {
-    CALayer *layer = [CALayer layer];
+- (AXLayer *)separatorWithHeight:(CGFloat)height color:(UIColor *)color insets:(UIEdgeInsets)insets atIndex:(NSInteger)index {
+    AXLayer *layer = [AXLayer layer];
     layer.frame = CGRectMake(insets.left, kAXPickerToolBarHeight * index, self.bounds.size.width - (insets.left + insets.right), height);
     layer.backgroundColor = color.CGColor;
     layer.tag = index+1;
@@ -746,7 +753,8 @@
     
     switch (_style) {
         case AXPickerViewStyleNormal:
-            [self configureNormal];
+//            [self configureNormal];
+            [self setNeedsDisplay];
             break;
         case AXPickerViewStyleDatePicker:
         case AXPickerViewStyleCommonPicker:
@@ -777,11 +785,14 @@
     rect.origin.x = _customViewInsets.left;
     rect.size.width = self.bounds.size.width - (_customViewInsets.left + _customViewInsets.right);
     _customView.frame = rect;
+    [self resizingCustomView];
+    [self sizeToFit];
+    [self setNeedsDisplay];
     
     _customView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
 }
 
-- (void)configureNormal {
+- (void)configureNormal __deprecated {
     NSArray *buttons = [self.subviews filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         if ([evaluatedObject isKindOfClass:[UIButton class]]) {
             return YES;
@@ -791,7 +802,7 @@
     }]];
     for (UIButton *button in buttons) {
         BOOL(^separatorFilter)(id, NSDictionary*) = ^BOOL(id evaluatedObject, NSDictionary *bindings) {
-            if ([evaluatedObject isKindOfClass:[CALayer class]]) {
+            if ([evaluatedObject isKindOfClass:[AXLayer class]] && [evaluatedObject valueForKey:@"tag"]>0) {
                 return YES;
             } else {
                 return NO;
@@ -804,7 +815,6 @@
                 if ([obj isKindOfClass:[AXPickerViewSeparatorConfiguration class]]) {
                     AXPickerViewSeparatorConfiguration *config = (AXPickerViewSeparatorConfiguration *)obj;
                     if (config.index == index-1) {
-                        *stop = YES;
                         if (separator) {
                             CGRect rect = separator.frame;
                             rect.origin.x = config.insets.left;
@@ -812,7 +822,9 @@
                             rect.size.height = config.height;
                             separator.frame = rect;
                             separator.backgroundColor = config.color.CGColor ? config.color.CGColor : (_separatorColor.CGColor?_separatorColor.CGColor:kAXDefaultSeparatorColor.CGColor);
+                            [button.layer setNeedsLayout];
                         }
+                        *stop = YES;
                     }
                 }
             }];
@@ -822,7 +834,9 @@
                 CGRect rect = separator.frame;
                 rect.origin.x = _separatorInsets.left;
                 rect.size.width = self.bounds.size.width - (_separatorInsets.left + _separatorInsets.right);
+                rect.size.height = .5;
                 separator.frame = rect;
+                [button.layer setNeedsLayout];
             }
         }
         if (_itemConfigs && [_itemConfigs count] > 0) {
@@ -830,15 +844,15 @@
                 if ([obj isKindOfClass:[AXPickerViewItemConfiguration class]]) {
                     AXPickerViewItemConfiguration *config = (AXPickerViewItemConfiguration *)obj;
                     if (config.index == index-1) {
-                        *stop = YES;
                         button.tintColor = config.tintColor;
                         button.titleLabel.font = config.textFont;
+                        *stop = YES;
                     }
                 }
             }];
         } else {
             button.tintColor = _itemTintColor ? _itemTintColor : self.tintColor;
-            button.titleLabel.font = _itemFont;
+            button.titleLabel.font = _itemFont?_itemFont:[UIFont systemFontOfSize:18];
         }
     }
     self.cancelBtn.titleLabel.font = _cancelFont;
@@ -912,7 +926,7 @@
 - (void)resizingCustomView {
     if (![_customView isKindOfClass:[UILabel class]]) return;
     UILabel *label = (UILabel *)_customView;
-    CGSize usedSize = [label.text boundingRectWithSize:CGSizeMake(self.bounds.size.width, CGFLOAT_MAX)
+    CGSize usedSize = [label.text boundingRectWithSize:CGSizeMake(self.bounds.size.width-_customViewInsets.left-_customViewInsets.right, CGFLOAT_MAX)
                                                options:NSStringDrawingUsesLineFragmentOrigin
                                             attributes:@{NSFontAttributeName : label.font}
                                                context:nil].size;
@@ -942,12 +956,11 @@
 
 #pragma mark - Private_actions
 - (void)buttonClicked:(UIButton *)sender {
-    [self hideAnimated:YES
-            completion:^{
-                if (_delegate && [_delegate respondsToSelector:@selector(pickerView:didSelectedItem:atIndex:)]) {
-                    [_delegate pickerView:self didSelectedItem:[sender titleForState:UIControlStateNormal] atIndex:sender.tag - 1];
-                }
-            }];
+    [self hide:YES completion:^{
+        if (_delegate && [_delegate respondsToSelector:@selector(pickerView:didSelectedItem:atIndex:)]) {
+            [_delegate pickerView:self didSelectedItem:[sender titleForState:UIControlStateNormal] atIndex:sender.tag - 1];
+        }
+    }];
     if (_executing) {
         EXECUTE_ON_MAIN_THREAD(^{
             _executing([sender titleForState:UIControlStateNormal], sender.tag - 1, self);
@@ -956,12 +969,11 @@
 }
 
 - (void)didConfirm:(UIButton *)sender {
-    [self hideAnimated:YES
-            completion:^{
-                if (_delegate && [_delegate respondsToSelector:@selector(pickerViewDidConfirm:)]) {
-                    [_delegate pickerViewDidConfirm:self];
-                }
-            }];
+    [self hide:YES completion:^{
+        if (_delegate && [_delegate respondsToSelector:@selector(pickerViewDidConfirm:)]) {
+            [_delegate pickerViewDidConfirm:self];
+        }
+    }];
     if (_completion) {
         EXECUTE_ON_MAIN_THREAD(^{
             _completion(self);
@@ -970,12 +982,11 @@
 }
 
 - (void)didCancel:(UIControl *)sender {
-    [self hideAnimated:YES
-            completion:^{
-                if (_delegate && [_delegate respondsToSelector:@selector(pickerViewDidCancel:)]) {
-                    [_delegate pickerViewDidCancel:self];
-                }
-            }];
+    [self hide:YES completion:^{
+        if (_delegate && [_delegate respondsToSelector:@selector(pickerViewDidCancel:)]) {
+            [_delegate pickerViewDidCancel:self];
+        }
+    }];
     if (_revoking) {
         EXECUTE_ON_MAIN_THREAD(^{
             _revoking(self);
@@ -984,11 +995,11 @@
 }
 #pragma mark - AXPickerContentViewDelegate
 - (void)contentViewDidTouchBackground:(AXPickerContentView *)contentView {
-    [self hideAnimated:YES completion:nil];
+    [self hide:YES completion:NULL];
 }
 
 - (void)contentViewDidReachLimitedVelocity:(AXPickerContentView *)contentView {
-    [self hideAnimated:YES completion:nil];
+    [self hide:YES completion:NULL];
 }
 
 #pragma mark - AXPickerContentViewDataSource
@@ -1084,7 +1095,7 @@
         });
     }
     // Show
-    [pickerView showAnimated:YES completion:completion revoking:revoking executing:executing];
+    [pickerView show:YES completion:completion revoking:revoking executing:executing];
     return pickerView;
 }
 @end
@@ -1141,142 +1152,139 @@
     }
     [AXImagePickerController requestAuthorizationCompletion:^{
         [collectionView reloadData];
-        [pickerView showAnimated:YES
-                      completion:completion
-                        revoking:revoking
-                       executing:^(NSString *selectedTitle, NSInteger index, AXPickerView *inPickerView) {
-                           NSInteger indexInfo = 0;
-                           if (pickerView.containsCamera) {
-                               indexInfo = index;
-                           } else {
-                               indexInfo = index + 1;
-                           }
-                           switch (indexInfo) {
-                               case 0:
-                               {
-                                   [UIImagePickerController requestAuthorizationOfCameraCompletion:^{
-                                       UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-                                       imagePicker.delegate = pickerView;
-                                       if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                                           imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                                           UIViewController *controller = pickerView.window.rootViewController;
-                                           pickerView.removeFromSuperViewOnHide = NO;
-                                           if (controller) {
-                                               UIViewController *presentedController = controller.presentedViewController;
-                                               if (presentedController) {
-                                                   [presentedController presentViewController:imagePicker
-                                                                                     animated:YES
-                                                                                   completion:nil];
-                                               } else {
-                                                   [controller presentViewController:imagePicker
-                                                                            animated:YES
-                                                                          completion:nil];
-                                               }
-                                           }
-                                       } else {
-                                           [[AXPracticalHUD sharedHUD] showErrorInView:pickerView.window
-                                                                                  text:@"相机不可用"
-                                                                                detail:@"请检查并重试"
-                                                                         configuration:^(AXPracticalHUD *HUD) {
-                                                                             HUD.translucent = YES;
-                                                                             HUD.lockBackground = YES;
-                                                                             HUD.dimBackground = YES;
-                                                                             HUD.position  = AXPracticalHUDPositionCenter;
-                                                                             HUD.animation = AXPracticalHUDAnimationFade;
-                                                                             HUD.restoreEnabled = YES;
-                                                                             [HUD hideAnimated:YES
-                                                                                    afterDelay:4.0
-                                                                                    completion:nil];
-                                                                         }];
-                                       }
-                                   } failure:^{
-                                       [[AXPracticalHUD sharedHUD] showErrorInView:pickerView.window
-                                                                              text:@"访问相机失败"
-                                                                            detail:@"请前往 设置->隐私->相机 允许应用访问相机"
-                                                                     configuration:^(AXPracticalHUD *HUD) {
-                                                                         HUD.translucent = YES;
-                                                                         HUD.lockBackground = YES;
-                                                                         HUD.dimBackground = YES;
-                                                                         HUD.position  = AXPracticalHUDPositionCenter;
-                                                                         HUD.animation = AXPracticalHUDAnimationFade;
-                                                                         HUD.restoreEnabled = YES;
-                                                                         [HUD hideAnimated:YES
-                                                                                afterDelay:4.0
-                                                                                completion:nil];
-                                                                     }];
-                                   }];
-                               }
-                                   break;
-                               case 1:
-                               {
-                                   [AXImagePickerController requestAuthorizationCompletion:^{
-                                       AXImagePickerController *imagePicker = [[AXImagePickerController alloc] init];
-                                       imagePicker.delegate = pickerView;
-                                       imagePicker.maxAllowedSelectionCount = pickerView.maxAllowedSelectionCount;
-                                       imagePicker.selectionTintColor = pickerView.selectionTintColor;
-                                       imagePicker.allowsMultipleSelection = pickerView.allowsMultipleSelection;
-                                       UIViewController *controller = pickerView.window.rootViewController;
-                                       pickerView.removeFromSuperViewOnHide = NO;
-                                       objc_setAssociatedObject(pickerView, @selector(imagePickerController), imagePicker, OBJC_ASSOCIATION_ASSIGN);
-                                       if (controller) {
-                                           UIViewController *presentedController = controller.presentedViewController;
-                                           if (presentedController) {
-                                               [presentedController presentViewController:imagePicker
-                                                                                 animated:YES
-                                                                               completion:nil];
-                                           } else {
-                                               [controller presentViewController:imagePicker
-                                                                        animated:YES
-                                                                      completion:nil];
-                                           }
-                                       }
-                                   } failure:^{
-                                       [[AXPracticalHUD sharedHUD] showErrorInView:pickerView.window
-                                                                              text:@"访问相册失败"
-                                                                            detail:@"请前往 设置->隐私->照片 允许应用访问相册"
-                                                                     configuration:^(AXPracticalHUD *HUD) {
-                                                                         HUD.translucent = YES;
-                                                                         HUD.lockBackground = YES;
-                                                                         HUD.dimBackground = YES;
-                                                                         HUD.position  = AXPracticalHUDPositionCenter;
-                                                                         HUD.animation = AXPracticalHUDAnimationFade;
-                                                                         HUD.restoreEnabled = YES;
-                                                                         [HUD hideAnimated:YES
-                                                                                afterDelay:4.0
-                                                                                completion:nil];
-                                                                     }];
-                                   }];
-                               }
-                                   break;
-                               case 2:
-                               {
-                                   if ([pickerView.customView isKindOfClass:[UICollectionView class]]) {
-                                       NSMutableArray *images = [NSMutableArray array];
-                                       for (NSIndexPath *indexPath in [(UICollectionView *)pickerView.customView indexPathsForSelectedItems]) {
-                                           if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
-                                               PHAsset *asset = [pickerView.photoAssetsResult objectAtIndex:indexPath.item];
-                                               UIImage *image = [asset image];
-                                               if (image) {
-                                                   [images addObject:image];
-                                               }
-                                           } else {
-                                               ALAsset *asset = [pickerView.photoAssets objectAtIndex:indexPath.item];
-                                               UIImage *image = [asset image];
-                                               if (image) {
-                                                   [images addObject:image];
-                                               }
-                                           }
-                                       }
-                                       if (pickerView.imagePickerCompletion) {
-                                           pickerView.imagePickerCompletion(pickerView, images);
-                                       }
-                                   }
-                               }
-                                   break;
-                               default:
-                                   break;
-                           }
-                       }];
+        [pickerView show:YES completion:completion revoking:revoking executing:^(NSString *selectedTitle, NSInteger index, AXPickerView *inPickerView) {
+            NSInteger indexInfo = 0;
+            if (pickerView.containsCamera) {
+                indexInfo = index;
+            } else {
+                indexInfo = index + 1;
+            }
+            switch (indexInfo) {
+                case 0:
+                {
+                    [UIImagePickerController requestAuthorizationOfCameraCompletion:^{
+                        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+                        imagePicker.delegate = pickerView;
+                        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                            UIViewController *controller = pickerView.window.rootViewController;
+                            pickerView.removeFromSuperViewOnHide = NO;
+                            if (controller) {
+                                UIViewController *presentedController = controller.presentedViewController;
+                                if (presentedController) {
+                                    [presentedController presentViewController:imagePicker
+                                                                      animated:YES
+                                                                    completion:nil];
+                                } else {
+                                    [controller presentViewController:imagePicker
+                                                             animated:YES
+                                                           completion:nil];
+                                }
+                            }
+                        } else {
+                            [[AXPracticalHUD sharedHUD] showErrorInView:pickerView.window
+                                                                   text:@"相机不可用"
+                                                                 detail:@"请检查并重试"
+                                                          configuration:^(AXPracticalHUD *HUD) {
+                                                              HUD.translucent = YES;
+                                                              HUD.lockBackground = YES;
+                                                              HUD.dimBackground = YES;
+                                                              HUD.position  = AXPracticalHUDPositionCenter;
+                                                              HUD.animation = AXPracticalHUDAnimationFade;
+                                                              HUD.restoreEnabled = YES;
+                                                              [HUD hideAnimated:YES
+                                                                     afterDelay:4.0
+                                                                     completion:nil];
+                                                          }];
+                        }
+                    } failure:^{
+                        [[AXPracticalHUD sharedHUD] showErrorInView:pickerView.window
+                                                               text:@"访问相机失败"
+                                                             detail:@"请前往 设置->隐私->相机 允许应用访问相机"
+                                                      configuration:^(AXPracticalHUD *HUD) {
+                                                          HUD.translucent = YES;
+                                                          HUD.lockBackground = YES;
+                                                          HUD.dimBackground = YES;
+                                                          HUD.position  = AXPracticalHUDPositionCenter;
+                                                          HUD.animation = AXPracticalHUDAnimationFade;
+                                                          HUD.restoreEnabled = YES;
+                                                          [HUD hideAnimated:YES
+                                                                 afterDelay:4.0
+                                                                 completion:nil];
+                                                      }];
+                    }];
+                }
+                    break;
+                case 1:
+                {
+                    [AXImagePickerController requestAuthorizationCompletion:^{
+                        AXImagePickerController *imagePicker = [[AXImagePickerController alloc] init];
+                        imagePicker.delegate = pickerView;
+                        imagePicker.maxAllowedSelectionCount = pickerView.maxAllowedSelectionCount;
+                        imagePicker.selectionTintColor = pickerView.selectionTintColor;
+                        imagePicker.allowsMultipleSelection = pickerView.allowsMultipleSelection;
+                        UIViewController *controller = pickerView.window.rootViewController;
+                        pickerView.removeFromSuperViewOnHide = NO;
+                        objc_setAssociatedObject(pickerView, @selector(imagePickerController), imagePicker, OBJC_ASSOCIATION_ASSIGN);
+                        if (controller) {
+                            UIViewController *presentedController = controller.presentedViewController;
+                            if (presentedController) {
+                                [presentedController presentViewController:imagePicker
+                                                                  animated:YES
+                                                                completion:nil];
+                            } else {
+                                [controller presentViewController:imagePicker
+                                                         animated:YES
+                                                       completion:nil];
+                            }
+                        }
+                    } failure:^{
+                        [[AXPracticalHUD sharedHUD] showErrorInView:pickerView.window
+                                                               text:@"访问相册失败"
+                                                             detail:@"请前往 设置->隐私->照片 允许应用访问相册"
+                                                      configuration:^(AXPracticalHUD *HUD) {
+                                                          HUD.translucent = YES;
+                                                          HUD.lockBackground = YES;
+                                                          HUD.dimBackground = YES;
+                                                          HUD.position  = AXPracticalHUDPositionCenter;
+                                                          HUD.animation = AXPracticalHUDAnimationFade;
+                                                          HUD.restoreEnabled = YES;
+                                                          [HUD hideAnimated:YES
+                                                                 afterDelay:4.0
+                                                                 completion:nil];
+                                                      }];
+                    }];
+                }
+                    break;
+                case 2:
+                {
+                    if ([pickerView.customView isKindOfClass:[UICollectionView class]]) {
+                        NSMutableArray *images = [NSMutableArray array];
+                        for (NSIndexPath *indexPath in [(UICollectionView *)pickerView.customView indexPathsForSelectedItems]) {
+                            if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
+                                PHAsset *asset = [pickerView.photoAssetsResult objectAtIndex:indexPath.item];
+                                UIImage *image = [asset image];
+                                if (image) {
+                                    [images addObject:image];
+                                }
+                            } else {
+                                ALAsset *asset = [pickerView.photoAssets objectAtIndex:indexPath.item];
+                                UIImage *image = [asset image];
+                                if (image) {
+                                    [images addObject:image];
+                                }
+                            }
+                        }
+                        if (pickerView.imagePickerCompletion) {
+                            pickerView.imagePickerCompletion(pickerView, images);
+                        }
+                    }
+                }
+                    break;
+                default:
+                    break;
+            }
+        }];
     } failure:^{
         
     }];
@@ -1684,6 +1692,10 @@
         _index = index;
     }
     return self;
+}
+
+- (BOOL)isEqual:(id)object {
+    return self.index == [[object valueForKey:@"index"] integerValue];
 }
 
 + (instancetype)configurationWithTintColor:(UIColor *)tintColor font:(UIFont *)textFont atIndex:(NSInteger)index {

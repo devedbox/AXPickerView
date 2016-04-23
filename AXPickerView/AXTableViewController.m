@@ -92,7 +92,12 @@
         {
             [AXPickerView showImagePickerInView:self.view.window animated:YES allowsMultipleSelection:YES containsCamera:YES configuration:^(AXPickerView *pickerView) {
                 pickerView.selectionTintColor = kAXDefaultSelectedColor;
-                pickerView.separatorConfigs = @[[AXPickerViewSeparatorConfiguration configurationWithHeight:0 insets:UIEdgeInsetsZero color:nil atIndex:0]];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    pickerView.separatorConfigs = @[[AXPickerViewSeparatorConfiguration configurationWithHeight:0 insets:UIEdgeInsetsZero color:nil atIndex:0]];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        pickerView.separatorConfigs = @[[AXPickerViewSeparatorConfiguration configurationWithHeight:0 insets:UIEdgeInsetsZero color:nil atIndex:1]];
+                    });
+                });
             } completion:NULL revoking:NULL imagePickercompletion:^(AXPickerView *pickerView, NSArray *images) {
                 [[AXPracticalHUD sharedHUD] showSuccessInView:self.view.window];
                 [[AXPracticalHUD sharedHUD] hideAnimated:YES afterDelay:2.0 completion:nil];
