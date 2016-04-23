@@ -1469,17 +1469,24 @@
     if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
         PHAsset *asset = [self.photoAssetsResult objectAtIndex:indexPath.item];
         CGSize targetSize = [self rightSizeWithOriginalSize:CGSizeMake(asset.pixelWidth, asset.pixelHeight) rightHeight:kImagePickerRightHeight];
-        PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-        options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-        options.resizeMode = PHImageRequestOptionsResizeModeFast;
-        options.synchronous = YES;
+        PHImageRequestOptions *options = objc_getAssociatedObject(self, _cmd);
+        if (!options) {
+            PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+            options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+            options.resizeMode = PHImageRequestOptionsResizeModeFast;
+            options.synchronous = YES;
+            objc_setAssociatedObject(self, _cmd, options, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+        typeof(cell) __weak wcell = cell;
         [[PHImageManager defaultManager] requestImageForAsset:asset
                                                    targetSize:CGSizeMake(targetSize.width * 2, targetSize.height * 2)
                                                   contentMode:PHImageContentModeAspectFill
                                                       options:options
                                                 resultHandler:^(UIImage *result, NSDictionary *info) {
                                                     if (result) {
-                                                        cell.imageView.image = result;
+                                                        dispatch_barrier_async(dispatch_get_main_queue(), ^{
+                                                            wcell.imageView.image = result;
+                                                        });
                                                     }
                                                 }];
     } else {
@@ -1491,6 +1498,20 @@
     return cell;
 }
 #pragma mark - UICollectionViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    PHImageRequestOptions *options = objc_getAssociatedObject(self, @selector(collectionView:cellForItemAtIndexPath:));
+    if (options) {
+        options.synchronous = NO;
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    PHImageRequestOptions *options = objc_getAssociatedObject(self, @selector(collectionView:cellForItemAtIndexPath:));
+    if (options) {
+        options.synchronous = YES;
+    }
+}
+
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([collectionView indexPathsForSelectedItems].count >= self.maxAllowedSelectionCount) {
         return NO;
