@@ -1085,7 +1085,19 @@
     AXPickerView *pickerView = [[AXPickerView alloc] initWithStyle:style
                                                              items:items];
     // Set property
-    pickerView.view = view;
+    if (!view) {
+        UIWindow *keyWindow = nil;
+        NSInteger i = 0;
+        while (keyWindow == nil && i <= [UIApplication sharedApplication].windows.count) {
+            UIWindow *_keyWindow = [[[UIApplication sharedApplication] windows] objectAtIndex:i++];
+            if ([_keyWindow isKeyWindow]) {
+                keyWindow = _keyWindow;
+            }
+        }
+        pickerView.view = keyWindow;
+    } else {
+        pickerView.view = view;
+    }
     pickerView.title = title;
     pickerView.customView = customView;
     [pickerView sizeToFit];

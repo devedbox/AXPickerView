@@ -10,6 +10,7 @@
 #import "AXPickerView.h"
 #import <AXPracticalHUD/AXPracticalHUD.h>
 #import "AXPickerView/AXPickerViewConstants.h"
+#import <AXExtensions/UIView+Extension.h>
 
 @interface AXTableViewController ()
 {
@@ -72,8 +73,9 @@
         case 1:
         {
             UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TestImage.jpg"]];
-            [imageView sizeToFit];
-            [AXPickerView showInView:self.view.window animated:YES style:AXPickerViewStyleNormal items:@[@"Yesterday",@"Today",@"Tomorrow"] title:@"Normal title" customView:imageView configuration:nil completion:nil revoking:nil executing:^(NSString *selectedTitle, NSInteger index, AXPickerView *inPickerView) {
+            imageView.width = self.view.width;
+            imageView.height = 220;
+            [AXPickerView showInView:nil animated:YES style:AXPickerViewStyleNormal items:@[@"Yesterday",@"Today",@"Tomorrow"] title:@"Normal title" customView:imageView configuration:nil completion:nil revoking:nil executing:^(NSString *selectedTitle, NSInteger index, AXPickerView *inPickerView) {
                 NSLog(@"selected: %@", selectedTitle);
             }];
         }

@@ -169,7 +169,7 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 @property(nonatomic) UIFont *tipsFont UI_APPEARANCE_SELECTOR;
 /// Initialize a picker view and show in a target view with some params.
 ///
-/// @param view          A target view.
+/// @param view          A target view. Pass nil to show in the  key window of the shared application.
 /// @param animated      A boolean value to decide animate or not.
 /// @param style         Style of picker view.
 /// @param items         Items when style is Normal style.
@@ -184,7 +184,7 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 + (instancetype)showInView:(UIView *)view animated:(BOOL)animated style:(AXPickerViewStyle)style items:(NSArray *)items title:(NSString *)title tips:(NSString *)tips configuration:(AXPickerViewConfiguration)configuration completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing;
 /// Initialize a picker view and show in a target view with some params.
 ///
-/// @param view          A target view.
+/// @param view          A target view. Pass nil to show in the  key window of the shared application.
 /// @param animated      A boolean value to decide animate or not.
 /// @param style         Style of picker view.
 /// @param items         Items when style is Normal style.
@@ -218,7 +218,7 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 @property(readonly, nonatomic) AXImagePickerController *imagePickerController;
 /// Initialize a picker with a image picker view as custom view and show in a target view.
 ///
-/// @param view                    A target view.
+/// @param view                    A target view. Pass nil to show in the key window of the shared application.
 /// @param animated                Animated or not.
 /// @param allowsMultipleSelection Allow multiple slection or not. Default is NO.
 /// @param containsCamera          Contains camera or not. Default is YES.
