@@ -75,7 +75,7 @@
             UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TestImage.jpg"]];
             imageView.width = self.view.width;
             imageView.height = 220;
-            [AXPickerView showInView:nil animated:YES style:AXPickerViewStyleNormal items:@[@"Yesterday",@"Today",@"Tomorrow"] title:@"Normal title" customView:imageView configuration:nil completion:nil revoking:nil executing:^(NSString *selectedTitle, NSInteger index, AXPickerView *inPickerView) {
+            [AXPickerView showInView:nil animated:YES style:AXPickerViewStyleNormal items:nil title:@"Normal title" customView:imageView configuration:nil completion:nil revoking:nil executing:^(NSString *selectedTitle, NSInteger index, AXPickerView *inPickerView) {
                 NSLog(@"selected: %@", selectedTitle);
             }];
         }

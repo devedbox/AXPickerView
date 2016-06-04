@@ -309,9 +309,7 @@
     
     switch (_style) {
         case AXPickerViewStyleNormal:
-            if (_items && _items.count > 0) {
-                [self addSubview:self.cancelBtn];
-            }
+           [self addSubview:self.cancelBtn];
             break;
         case AXPickerViewStyleDatePicker:
         case AXPickerViewStyleCommonPicker:
