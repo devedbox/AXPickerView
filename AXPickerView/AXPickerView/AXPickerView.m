@@ -124,7 +124,7 @@
     _separatorConfigs = @[[AXPickerViewSeparatorConfiguration configurationWithHeight:0.7 insets:UIEdgeInsetsZero color:nil atIndex:0]];
     _customViewInsets = UIEdgeInsetsMake(5, 5, 5, 5);
     _removeFromSuperViewOnHide = YES;
-    _scaleBackgroundView = YES;
+    _scaleBackgroundView = NO;
     
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     self.backgroundColor = [UIColor clearColor];
@@ -182,7 +182,7 @@
             
             if (_cancelBtn) {
                 _cancelBtn.backgroundColor = [UIColor clearColor];
-                [_cancelBtn setBackgroundImage:[self tintImage:[UIImage imageNamed:@"AXPickerView.bundle/ax_button"] WithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+                [_cancelBtn setBackgroundImage:[self tintImage:[UIImage imageNamed:[[NSBundle bundleForClass:self.class] pathForResource:@"AXPickerView.bundle/ax_button" ofType:@"png"]] WithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
             }
         }
             break;
@@ -684,7 +684,7 @@
     [button setTitle:title forState:UIControlStateNormal];
     button.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     button.backgroundColor = [UIColor clearColor];
-    [button setBackgroundImage:[self tintImage:[UIImage imageNamed:@"AXPickerView.bundle/ax_button"] WithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [button setBackgroundImage:[self tintImage:[UIImage imageNamed:[[NSBundle bundleForClass:self.class] pathForResource:@"AXPickerView.bundle/ax_button" ofType:@"png"]] WithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     UIColor * __block aItemColor;
     UIFont * __block aItemFont;
     [_itemConfigs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -1147,14 +1147,14 @@
     collectionView.delegate = pickerView;
     collectionView.dataSource = pickerView;
     pickerView.customView = collectionView;
-    /*
+    
     AXPracticalHUD *hud = [AXPracticalHUD showHUDInView:collectionView animated:YES];
     hud.translucent = YES;
     hud.lockBackground = YES;
     hud.dimBackground = YES;
     hud.removeFromSuperViewOnHide = YES;
     [hud hideAnimated:YES afterDelay:0.5 completion:nil];
-     */
+    
     [pickerView enumerateAssetsGroupCompletion:nil];
     if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
         [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:pickerView];
@@ -1297,7 +1297,12 @@
             }
         }];
     } failure:^{
-        
+        [[AXPracticalHUD sharedHUD] showErrorInView:collectionView text:@"提示" detail:@"需要授权之后方可继续" configuration:^(AXPracticalHUD *HUD) {
+            hud.translucent = NO;
+            hud.lockBackground = YES;
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hideAnimated:YES afterDelay:1.0 completion:NULL];
+        }];
     }];
     return pickerView;
 }
@@ -1338,6 +1343,14 @@
 
 - (NSMutableArray *)photoAssets {
     return [objc_getAssociatedObject(self, _cmd) mutableCopy];
+}
+
+- (AXPickerViewImageViewDidShowHandler)imageSelectionDidShowHandler {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setImageSelectionDidShowHandler:(AXPickerViewImageViewDidShowHandler)imageSelectionDidShowHandler {
+    objc_setAssociatedObject(self, @selector(imageSelectionDidShowHandler), [imageSelectionDidShowHandler copy], OBJC_ASSOCIATION_COPY);
 }
 
 - (BOOL)containsCamera {

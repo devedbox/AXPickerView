@@ -106,7 +106,7 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 /// Insets of custom view
 @property(assign, nonatomic) UIEdgeInsets customViewInsets UI_APPEARANCE_SELECTOR;
 /// Should scale background view
-@property(assign, nonatomic) BOOL scaleBackgroundView UI_APPEARANCE_SELECTOR;
+@property(assign, nonatomic) BOOL scaleBackgroundView UI_APPEARANCE_SELECTOR __deprecated;
 /// Delegate conforms to AXPikcerViewDelegate
 @property(assign, nonatomic) id<AXPickerViewDelegate>delegate;
 /// Datasource conforms to AXPickerViewDataSource
@@ -198,6 +198,11 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 /// @return A configured picker view
 + (instancetype)showInView:(UIView *)view animated:(BOOL)animated style:(AXPickerViewStyle)style items:(NSArray *)items title:(NSString *)title customView:(UIView *)customView configuration:(AXPickerViewConfiguration)configuration completion:(AXPickerViewCompletion)completion revoking:(AXPickerViewRevoking)revoking executing:(AXPickerViewExecuting)executing;
 @end
+/// Handler of picker view when image selection view did show.
+///
+/// @param pickerView the picker view which image selection view did show.
+///
+typedef void(^AXPickerViewImageViewDidShowHandler)(AXPickerView *pickerView);
 
 @interface AXPickerView(ImagePicker) <UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AXImagePickerControllerDelegate, PHPhotoLibraryChangeObserver>
 /// Fetch result object of photo asset.
@@ -216,6 +221,8 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 @property(strong, nonatomic) UIColor *selectionTintColor UI_APPEARANCE_SELECTOR;
 /// Image picker view controller
 @property(readonly, nonatomic) AXImagePickerController *imagePickerController;
+/// Image selection view did show handler.
+@property(copy, nonatomic) AXPickerViewImageViewDidShowHandler imageSelectionDidShowHandler;
 /// Initialize a picker with a image picker view as custom view and show in a target view.
 ///
 /// @param view                    A target view. Pass nil to show in the key window of the shared application.

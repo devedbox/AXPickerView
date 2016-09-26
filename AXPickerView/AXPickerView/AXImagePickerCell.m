@@ -79,7 +79,7 @@
 
 - (UIImageView *)markView {
     if (_markView) return _markView;
-    _markView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"AXPickerView.bundle/mark"] tintImageWithColor:[UIColor colorWithWhite:0 alpha:0.6]]];
+    _markView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:[[NSBundle bundleForClass:self.class] pathForResource:@"AXPickerView.bundle/mark" ofType:@"png"]] tintImageWithColor:[UIColor colorWithWhite:0 alpha:0.6]]];
     _markView.clipsToBounds = YES;
     _markView.contentMode = UIViewContentModeScaleAspectFill;
     _markView.backgroundColor = [UIColor clearColor];

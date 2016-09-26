@@ -26,4 +26,6 @@
  *  @return a new image with tint color
  */
 - (instancetype)tintImageWithColor:(UIColor *)color;
+
++ (instancetype)rectangleImageWithColor:(UIColor *)color size:(CGSize)size;
 @end

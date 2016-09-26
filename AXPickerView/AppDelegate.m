@@ -22,7 +22,7 @@
     [[AXPickerView appearance] setTipsFont:[UIFont systemFontOfSize:14]];
     [[AXPickerView appearance] setItemFont:[UIFont systemFontOfSize:18]];
     [[AXPickerView appearance] setItemTintColor:[UIColor blackColor]];
-    [[AXPickerView appearance] setScaleBackgroundView:NO];
+//    [[AXPickerView appearance] setScaleBackgroundView:NO];
     return YES;
 }
 
