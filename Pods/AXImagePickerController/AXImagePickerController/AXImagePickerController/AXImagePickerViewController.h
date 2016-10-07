@@ -12,7 +12,7 @@
 
 @protocol AXImagePickerControllerDelegate;
 
-@interface AXViewController : UIViewController
+@interface AXImagePickerViewController : UIViewController
 /// Title label
 @property(strong, nonatomic) UILabel *titleLabel __deprecated;
 /// Count label

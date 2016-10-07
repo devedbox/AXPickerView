@@ -10,7 +10,7 @@
 
 @class AXImagePickerController;
 
-@interface AXPreviewController : UIViewController
+@interface AXImagePickerPreviewController : UIViewController
 /// Assets
 @property(copy, nonatomic) NSArray *assets;
 /// Images

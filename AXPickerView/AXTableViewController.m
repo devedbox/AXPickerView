@@ -102,7 +102,7 @@
                 });
             } completion:NULL revoking:NULL imagePickercompletion:^(AXPickerView *pickerView, NSArray *images) {
                 [[AXPracticalHUD sharedHUD] showSuccessInView:self.view.window];
-                [[AXPracticalHUD sharedHUD] hideAnimated:YES afterDelay:2.0 completion:nil];
+                [[AXPracticalHUD sharedHUD] hide:YES afterDelay:2.0 completion:nil];
             }];
         }
             break;

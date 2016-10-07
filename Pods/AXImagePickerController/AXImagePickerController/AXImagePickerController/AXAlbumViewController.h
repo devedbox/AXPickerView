@@ -6,9 +6,9 @@
 //  Copyright © 2015 ai. All rights reserved.
 //
 
-#import "AXViewController.h"
+#import "AXImagePickerViewController.h"
 
-@interface AXAlbumViewController : AXViewController<UITableViewDataSource, UITableViewDelegate>
+@interface AXAlbumViewController : AXImagePickerViewController<UITableViewDataSource, UITableViewDelegate>
 /// Album library
 @property(readonly, strong, nonatomic) ALAssetsLibrary *albumLibrary NS_DEPRECATED_IOS(7_0, 8_0);
 /// Album groups of ALAssetsGroup

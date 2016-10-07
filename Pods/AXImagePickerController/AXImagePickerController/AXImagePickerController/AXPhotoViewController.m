@@ -47,7 +47,7 @@
     } else {
         if (_assetsGroup) {
             AXPracticalHUD *hud = [AXPracticalHUD showHUDInView:self.view animated:YES];
-            hud.translucent = YES;
+            hud.contentView.translucent = YES;
             NSMutableArray *assets = [NSMutableArray array];
             [_assetsGroup enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
                 if (result) {
@@ -70,7 +70,7 @@
                         }
                         
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [hud hideAnimated:YES afterDelay:0.25 completion:^{
+                            [hud hide:YES afterDelay:0.25 completion:^{
                                 _assets = [assets copy];
                                 [_photoView reloadData];
                                 for (NSNumber *index in indexs) {
@@ -86,7 +86,7 @@
             }];
         } else {
             AXPracticalHUD *hud = [AXPracticalHUD showHUDInView:self.view animated:YES];
-            hud.translucent = YES;
+            hud.contentView.translucent = YES;
             [self.albumViewController loadGroupsCompletion:^{
                 _assetsGroup = self.albumViewController.topAlbumInfo;
                 self.title = [_assetsGroup valueForProperty:ALAssetsGroupPropertyName];
@@ -97,7 +97,7 @@
                     }
                     if (index == [_assetsGroup numberOfAssets]-1) {
                         _assets = [assets copy];
-                        [hud hideAnimated:YES afterDelay:0.25 completion:^{
+                        [hud hide:YES afterDelay:0.25 completion:^{
                             [_photoView reloadData];
                         }];
                     }

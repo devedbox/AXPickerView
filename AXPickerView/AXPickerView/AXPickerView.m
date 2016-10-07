@@ -1149,11 +1149,11 @@
     pickerView.customView = collectionView;
     
     AXPracticalHUD *hud = [AXPracticalHUD showHUDInView:collectionView animated:YES];
-    hud.translucent = YES;
+    hud.contentView.translucent = YES;
     hud.lockBackground = YES;
     hud.dimBackground = YES;
     hud.removeFromSuperViewOnHide = YES;
-    [hud hideAnimated:YES afterDelay:0.5 completion:nil];
+    [hud hide:YES afterDelay:0.5 completion:nil];
     
     [pickerView enumerateAssetsGroupCompletion:nil];
     if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
@@ -1197,13 +1197,13 @@
                                                                    text:@"相机不可用"
                                                                  detail:@"请检查并重试"
                                                           configuration:^(AXPracticalHUD *HUD) {
-                                                              HUD.translucent = YES;
+                                                              HUD.contentView.translucent = YES;
                                                               HUD.lockBackground = YES;
                                                               HUD.dimBackground = YES;
                                                               HUD.position  = AXPracticalHUDPositionCenter;
                                                               HUD.animation = AXPracticalHUDAnimationFade;
                                                               HUD.restoreEnabled = YES;
-                                                              [HUD hideAnimated:YES
+                                                              [HUD hide:YES
                                                                      afterDelay:4.0
                                                                      completion:nil];
                                                           }];
@@ -1213,13 +1213,13 @@
                                                                text:@"访问相机失败"
                                                              detail:@"请前往 设置->隐私->相机 允许应用访问相机"
                                                       configuration:^(AXPracticalHUD *HUD) {
-                                                          HUD.translucent = YES;
+                                                          HUD.contentView.translucent = YES;
                                                           HUD.lockBackground = YES;
                                                           HUD.dimBackground = YES;
                                                           HUD.position  = AXPracticalHUDPositionCenter;
                                                           HUD.animation = AXPracticalHUDAnimationFade;
                                                           HUD.restoreEnabled = YES;
-                                                          [HUD hideAnimated:YES
+                                                          [HUD hide:YES
                                                                  afterDelay:4.0
                                                                  completion:nil];
                                                       }];
@@ -1254,13 +1254,13 @@
                                                                text:@"访问相册失败"
                                                              detail:@"请前往 设置->隐私->照片 允许应用访问相册"
                                                       configuration:^(AXPracticalHUD *HUD) {
-                                                          HUD.translucent = YES;
+                                                          HUD.contentView.translucent = YES;
                                                           HUD.lockBackground = YES;
                                                           HUD.dimBackground = YES;
                                                           HUD.position  = AXPracticalHUDPositionCenter;
                                                           HUD.animation = AXPracticalHUDAnimationFade;
                                                           HUD.restoreEnabled = YES;
-                                                          [HUD hideAnimated:YES
+                                                          [HUD hide:YES
                                                                  afterDelay:4.0
                                                                  completion:nil];
                                                       }];
@@ -1298,10 +1298,10 @@
         }];
     } failure:^{
         [[AXPracticalHUD sharedHUD] showErrorInView:collectionView text:@"提示" detail:@"需要授权之后方可继续" configuration:^(AXPracticalHUD *HUD) {
-            hud.translucent = NO;
+            hud.contentView.translucent = NO;
             hud.lockBackground = YES;
             hud.removeFromSuperViewOnHide = YES;
-            [hud hideAnimated:YES afterDelay:1.0 completion:NULL];
+            [hud hide:YES afterDelay:1.0 completion:NULL];
         }];
     }];
     return pickerView;

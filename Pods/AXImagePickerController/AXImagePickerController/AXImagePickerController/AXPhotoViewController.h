@@ -6,10 +6,10 @@
 //  Copyright © 2015 ai. All rights reserved.
 //
 
-#import "AXViewController.h"
+#import "AXImagePickerViewController.h"
 #import "AXAlbumViewController.h"
 
-@interface AXPhotoViewController : AXViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface AXPhotoViewController : AXImagePickerViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 /// Assets library
 @property(readonly, strong, nonatomic) ALAssetsLibrary *assetsLibrary NS_DEPRECATED_IOS(7_0, 8_0);
 /// Assets collection

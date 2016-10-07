@@ -3,10 +3,12 @@ PODS:
   - AXExtensions (1.2.12):
     - MJRefresh (~> 3.0.0)
     - pop
-  - AXImagePickerController (1.0.4):
+  - AXImagePickerController (1.2.0):
     - AXExtensions
     - AXPracticalHUD
-  - AXPracticalHUD (1.0.8)
+  - AXIndicatorView (0.0.1)
+  - AXPracticalHUD (1.1.0):
+    - AXIndicatorView
   - MJRefresh (3.0.8)
   - pop (1.0.9)
 
@@ -19,11 +21,12 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AXCollectionViewFlowLayout: bf02f0b0733741258e8afe2974b5e02fd645ce08
   AXExtensions: d88f3926cc8c89ea4b4d59952ffafd8edf2ba29c
-  AXImagePickerController: 74f03dc0af772e07190a91cb8eec3fe81e121ebd
-  AXPracticalHUD: 391940a1571fda2f2add03efd718b6356fdefe7b
+  AXImagePickerController: b7b4e8de1717de7e8668ccf68645348f31dfd83f
+  AXIndicatorView: e53bd5685e9c8895075a0ad04311841eb75b048c
+  AXPracticalHUD: 50d96645be97b5c68a121d3a59bb9b45b5983612
   MJRefresh: fafde8f18f4afd66b434331a9beb67a6c0264056
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
 
 PODFILE CHECKSUM: 2846fe7d37c8c2709987e08f39c972e6fba28c93
 
-COCOAPODS: 1.0.0.beta.8
+COCOAPODS: 1.1.0.beta.2

@@ -6,13 +6,13 @@
 //  Copyright © 2015 ai. All rights reserved.
 //
 
-#import "AXPreviewController.h"
+#import "AXImagePickerPreviewController.h"
 #import "AXImagePickerController.h"
 #import <AXPracticalHUD/AXPracticalHUD.h>
 #import <AXExtensions/UINavigationBar+Separator_hidden.h>
 #import <AXExtensions/UIToolbar+Separator_hidden.h>
 
-@interface AXPreviewController()<UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+@interface AXImagePickerPreviewController()<UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 {
     /// Send bar button item
     UIBarButtonItem *_sendItem;
@@ -21,7 +21,7 @@
 @property(strong, nonatomic) UILabel *titleLabel __deprecated;
 @end
 
-@implementation AXPreviewController
+@implementation AXImagePickerPreviewController
 #pragma mark - Life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -74,7 +74,7 @@
 #pragma mark - Public
 + (instancetype)defaultController {
     UIPageViewController *pageVC = [[self class] PageViewController];
-    AXPreviewController *previewVC = [[AXPreviewController alloc] init];
+    AXImagePickerPreviewController *previewVC = [[AXImagePickerPreviewController alloc] init];
     pageVC.automaticallyAdjustsScrollViewInsets = NO;
     [pageVC willMoveToParentViewController:previewVC];
     [previewVC addChildViewController:pageVC];
@@ -172,18 +172,18 @@
 - (void)sendItem:(UIBarButtonItem *)sender {
     AXImagePickerController *imagePickerController = self.imagePickerController;
     AXPracticalHUD *hud = [AXPracticalHUD showHUDInView:self.view animated:YES];
-    hud.translucent = YES;
+    hud.contentView.translucent = YES;
     id<AXImagePickerControllerDelegate> delegate = imagePickerController.delegate;
     NSArray *selectedImages = imagePickerController.selectedImages;
     if (!delegate) {
-        [hud hideAnimated:YES];
+        [hud hide:YES];
         return;
     }
     if (!selectedImages) {
-        [hud hideAnimated:YES];
+        [hud hide:YES];
         return;
     }
-    [hud hideAnimated:YES
+    [hud hide:YES
            afterDelay:1.0
            completion:^{
                [self dismissViewControllerAnimated:YES
