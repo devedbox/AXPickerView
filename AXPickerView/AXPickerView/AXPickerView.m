@@ -174,7 +174,7 @@
             for (UIButton *button in buttons) {
                 [button removeFromSuperview];
             }
-
+            
             NSInteger count = _items.count;
             for (NSInteger i = 0; i < count; i ++) {
                 [self addSubview:[self buttonWithTitle:_items[i] rightHeight:kAXPickerToolBarHeight atIndex:i]];
@@ -309,7 +309,7 @@
     
     switch (_style) {
         case AXPickerViewStyleNormal:
-           [self addSubview:self.cancelBtn];
+            [self addSubview:self.cancelBtn];
             break;
         case AXPickerViewStyleDatePicker:
         case AXPickerViewStyleCommonPicker:
@@ -726,7 +726,7 @@
             }
         }
     }];
-
+    
     if (index == 0) {
         if (!_customView) {
             [button.layer addSublayer:[self separatorWithHeight:_height color:separatorColor ? separatorColor : (_separatorColor?_separatorColor:kAXDefaultSeparatorColor) insets:insets atIndex:0]];
@@ -751,7 +751,7 @@
     
     switch (_style) {
         case AXPickerViewStyleNormal:
-//            [self configureNormal];
+            //            [self configureNormal];
             [self setNeedsDisplay];
             break;
         case AXPickerViewStyleDatePicker:
@@ -968,6 +968,10 @@
 }
 
 - (void)didConfirm:(UIButton *)sender {
+    [self performSelector:@selector(didComfirmAction) withObject:nil afterDelay:.0 inModes:@[NSDefaultRunLoopMode]];
+}
+
+- (void)didComfirmAction {
     [self hide:YES completion:^{
         if (_delegate && [_delegate respondsToSelector:@selector(pickerViewDidConfirm:)]) {
             [_delegate pickerViewDidConfirm:self];
@@ -981,6 +985,10 @@
 }
 
 - (void)didCancel:(UIControl *)sender {
+    [self performSelector:@selector(didCancelAction) withObject:nil afterDelay:.0 inModes:@[NSDefaultRunLoopMode]];
+}
+
+- (void)didCancelAction {
     [self hide:YES completion:^{
         if (_delegate && [_delegate respondsToSelector:@selector(pickerViewDidCancel:)]) {
             [_delegate pickerViewDidCancel:self];
@@ -1204,8 +1212,8 @@
                                                               HUD.animation = AXPracticalHUDAnimationFade;
                                                               HUD.restoreEnabled = YES;
                                                               [HUD hide:YES
-                                                                     afterDelay:4.0
-                                                                     completion:nil];
+                                                             afterDelay:4.0
+                                                             completion:nil];
                                                           }];
                         }
                     } failure:^{
@@ -1220,8 +1228,8 @@
                                                           HUD.animation = AXPracticalHUDAnimationFade;
                                                           HUD.restoreEnabled = YES;
                                                           [HUD hide:YES
-                                                                 afterDelay:4.0
-                                                                 completion:nil];
+                                                         afterDelay:4.0
+                                                         completion:nil];
                                                       }];
                     }];
                 }
@@ -1261,8 +1269,8 @@
                                                           HUD.animation = AXPracticalHUDAnimationFade;
                                                           HUD.restoreEnabled = YES;
                                                           [HUD hide:YES
-                                                                 afterDelay:4.0
-                                                                 completion:nil];
+                                                         afterDelay:4.0
+                                                         completion:nil];
                                                       }];
                     }];
                 }
@@ -1313,8 +1321,8 @@
     PHFetchOptions *options = [[PHFetchOptions alloc] init];
     options.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO]];
     PHFetchResult *collectionResult = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
-                                                                     subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary
-                                                                     options:nil];
+                                                                               subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary
+                                                                               options:nil];
     PHAssetCollection *topCollection = [collectionResult firstObject];
     if (topCollection) {
         PHFetchResult *assetResult = [PHAsset fetchAssetsInAssetCollection:topCollection
@@ -1525,7 +1533,7 @@
         ALAsset *asset = [self.photoAssets objectAtIndex:indexPath.row];
         cell.imageView.image = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
     }
-//    cell.label.textColor = self.selectionTintColor ? self.selectionTintColor : kAXDefaultSelectedColor;
+    //    cell.label.textColor = self.selectionTintColor ? self.selectionTintColor : kAXDefaultSelectedColor;
     cell.tintColor = self.selectionTintColor ? self.selectionTintColor : kAXDefaultSelectedColor;
     return cell;
 }
