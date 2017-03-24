@@ -71,6 +71,11 @@
                 pickerView.tipsLabel.textAlignment = NSTextAlignmentLeft;
                 AXPickerViewItemConfiguration *config = [AXPickerViewItemConfiguration configurationWithTintColor:[UIColor redColor] font:[UIFont boldSystemFontOfSize:16] atIndex:0];
                 pickerView.itemConfigs = @[config];
+                /* // Translucent no.
+                pickerView.translucent = NO;
+                pickerView.backgroundColor = [UIColor colorWithRed:0.925 green:0.925 blue:0.925 alpha:1.00]; */
+                /* // Translucent style dark.
+                pickerView.translucentStyle = AXPickerViewTranslucentDark; */
             } completion:nil revoking:nil executing:^(NSString *selectedTitle, NSInteger index, AXPickerView *inPickerView) {
                 NSLog(@"selected: %@", selectedTitle);
             }];

@@ -59,6 +59,9 @@
 @property(copy, nonatomic) AXPickerViewRevoking revoking;
 /// Executing call bacl block.
 @property(copy, nonatomic) AXPickerViewExecuting executing;
+
+/// Configure the translucent info of the picker view.
+- (void)_configureTranslucentInfo;
 @end
 
 @interface AXLayer: CALayer
@@ -961,6 +964,28 @@
     return newImage;
 }
 
+- (void)_configureTranslucentInfo {
+    // Get the translucent and style.
+    BOOL translucent = self.translucent;
+    NSInteger translucentStyle = self.translucentStyle;
+    
+    if (!translucent) {
+        [self.effectView removeFromSuperview];
+    } else {
+        [self.effectView setFrame:self.bounds];
+        [self insertSubview:_effectView atIndex:0];
+        
+        switch (translucentStyle) {
+            case AXPickerViewTranslucentLight:
+                _effectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+                break;
+            default:// Dark.
+                _effectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+                break;
+        }
+    }
+}
+
 #pragma mark - Private_actions
 - (void)buttonClicked:(UIButton *)sender {
     [self hide:YES completion:^{
@@ -1030,6 +1055,8 @@
 @implementation AXPickerView (Translucent)
 - (void)setTranslucent:(BOOL)translucent {
     objc_setAssociatedObject(self, _cmd, @(translucent), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    // Update translucent info.
+    [self _configureTranslucentInfo];
 }
 
 - (BOOL)translucent {
@@ -1039,6 +1066,8 @@
 
 - (void)setTranslucentStyle:(AXPickerViewTranslucentStyle)translucentStyle {
     objc_setAssociatedObject(self, _cmd, @(translucentStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    // Update translucent info.
+    [self _configureTranslucentInfo];
 }
 
 - (AXPickerViewTranslucentStyle)translucentStyle {
