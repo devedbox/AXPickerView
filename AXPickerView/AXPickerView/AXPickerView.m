@@ -1027,6 +1027,26 @@
 }
 @end
 
+@implementation AXPickerView (Translucent)
+- (void)setTranslucent:(BOOL)translucent {
+    objc_setAssociatedObject(self, _cmd, @(translucent), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)translucent {
+    NSNumber *translucent = objc_getAssociatedObject(self, @selector(setTranslucent:));
+    return translucent ? translucent.boolValue : YES;
+}
+
+- (void)setTranslucentStyle:(AXPickerViewTranslucentStyle)translucentStyle {
+    objc_setAssociatedObject(self, _cmd, @(translucentStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (AXPickerViewTranslucentStyle)translucentStyle {
+    NSNumber *style = objc_getAssociatedObject(self, @selector(setTranslucentStyle:));
+    return style ? style.integerValue : AXPickerViewTranslucentLight;
+}
+@end
+
 #pragma mark - Implementation_DatePicker
 @implementation AXPickerView(DatePicker)
 - (NSDate *)selectedDate {

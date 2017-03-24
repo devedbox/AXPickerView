@@ -144,6 +144,18 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 - (void)hide:(BOOL)animated completion:(void(^)())completion;
 @end
 
+typedef NS_ENUM(NSInteger, AXPickerViewTranslucentStyle) {
+    AXPickerViewTranslucentLight,
+    AXPickerViewTranslucentDark
+};
+
+@interface AXPickerView (Translucent)
+/// Should translucent.
+@property(assign, nonatomic) BOOL translucent;
+/// Translucent style.
+@property(assign, nonatomic) AXPickerViewTranslucentStyle translucentStyle;
+@end
+
 @interface AXPickerView(DatePicker)
 /// Selected date of date picker view
 @property(readonly, nonatomic) NSDate *selectedDate;
