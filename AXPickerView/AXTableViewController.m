@@ -16,6 +16,8 @@
 {
     NSArray *_dataSource;
 }
+/// Image view.
+@property(weak, nonatomic) IBOutlet UIImageView *imageView;
 @end
 
 @implementation AXTableViewController
@@ -33,6 +35,9 @@
                     @{@"title":@"Date picker",@"detail":@"Show date picker view."},
                     @{@"title":@"Image picker",@"detail":@"Show normal picker view with image picker view."}
                     ];
+    [_imageView setFrame:self.view.bounds];
+    _imageView.image = [UIImage imageNamed:@"bg.jpg"];
+    self.tableView.backgroundView = _imageView;
 }
 
 - (void)didReceiveMemoryWarning {
