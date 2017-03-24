@@ -565,6 +565,8 @@
                          animations:^{
                              _backgroundView.alpha = 1.0;
                              self.transform = CGAffineTransformIdentity;
+                             // Updated the translation of background view.
+                             _backgroundView.transform = CGAffineTransformMakeTranslation(0, -CGRectGetHeight(self.frame));
                              if (_scaleBackgroundView) {
                                  if ([_view isKindOfClass:[UIWindow class]]) {
                                      UIView *view = ((UIView *)_view.subviews[0]);
@@ -602,6 +604,8 @@
     } else {
         self.alpha = 1.0;
         _backgroundView.alpha = 1.0;
+        // Updated the translation of background view.
+        _backgroundView.transform = CGAffineTransformMakeTranslation(0, -CGRectGetHeight(self.frame));
     }
 }
 
@@ -647,6 +651,8 @@
                          animations:^{
                              _backgroundView.alpha = 0.0;
                              self.transform = CGAffineTransformMakeTranslation(0.0, self.bounds.size.height);
+                             // Updated the translation of background view.
+                             _backgroundView.transform = CGAffineTransformIdentity;
                              if (_scaleBackgroundView) {
                                  id view = self.superview;
                                  if ([view isKindOfClass:[UIWindow class]]) {
@@ -664,6 +670,8 @@
                              }
                          }];
     } else {
+        // Updated the translation of background view.
+        _backgroundView.transform = CGAffineTransformIdentity;
         _backgroundView.alpha = 0.0;
         self.transform = CGAffineTransformMakeTranslation(0.0, self.bounds.size.height);
         __completion();
