@@ -143,6 +143,10 @@ if ([NSThread isMainThread]) {\
             [_contentView removeMotionEffect:_yMotionEffect];
         }
         [self updateForCurrentOrientationAnimated:NO];
+        
+        if ([_indicator isKindOfClass:[AXActivityIndicatorView class]]) {
+            [(AXActivityIndicatorView*)_indicator setAnimating:YES];
+        }
     }
 }
 
@@ -526,6 +530,9 @@ if ([NSThread isMainThread]) {\
             [self completed];
         }
         _showStarted = nil;
+    } else {
+        self.alpha = .0f;
+        [self completed];
     }
 }
 
@@ -539,6 +546,7 @@ if ([NSThread isMainThread]) {\
             }
             [(AXActivityIndicatorView *)_indicator setLineWidth:2.5];
             [(AXActivityIndicatorView *)_indicator setDrawingComponents:12];
+            [(AXActivityIndicatorView *)_indicator setShouldGradientColorIndex:YES];
             [(AXActivityIndicatorView *)_indicator setTintColor:self.tintColor];
             [(AXActivityIndicatorView *)_indicator setAnimating:YES];
             [_contentView addSubview:_indicator];
@@ -756,6 +764,7 @@ if ([NSThread isMainThread]) {\
 #else
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AXPracticalHUD.bundle/ax_hud_error" inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil]];
 #endif
+    [imageView setFrame:CGRectMake(0, 0, 37, 37)];
     [self _showInView:view animated:YES mode:AXPracticalHUDModeCustomView text:text detail:detail customView:imageView configuration:configuration];
 }
 - (void)showSuccessInView:(UIView *)view text:(NSString *)text detail:(NSString *)detail configuration:(void(^)(AXPracticalHUD *HUD))configuration
@@ -765,6 +774,7 @@ if ([NSThread isMainThread]) {\
 #else
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AXPracticalHUD.bundle/ax_hud_success" inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil]];
 #endif
+    [imageView setFrame:CGRectMake(0, 0, 37, 37)];
     [self _showInView:view animated:YES mode:AXPracticalHUDModeCustomView text:text detail:detail customView:imageView configuration:configuration];
 }
 

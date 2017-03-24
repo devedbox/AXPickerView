@@ -63,11 +63,9 @@
         if (CGRectIntersectsRect(modifiedAttributes.frame, rect)) {
             CGFloat distance = CGRectGetMidX(visibleRect) - modifiedAttributes.center.x;
             CGFloat normalizedDistance = distance / modifiedAttributes.size.width;
-            if (ABS(distance) < modifiedAttributes.size.width) {
-                CGFloat zoom = 1 - _scaleBounciness * ABS(normalizedDistance);
-                modifiedAttributes.transform3D = CATransform3DMakeScale(zoom, zoom, 1.0);
-                modifiedAttributes.zIndex = 1;
-            }
+            CGFloat zoom = 1 - _scaleBounciness * ABS(normalizedDistance);
+            modifiedAttributes.transform3D = CATransform3DMakeScale(zoom, zoom, 1.0);
+            modifiedAttributes.zIndex = 1;
         }
         [modifiedArray addObject:modifiedAttributes];
     }

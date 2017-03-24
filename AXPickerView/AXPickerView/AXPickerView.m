@@ -1161,7 +1161,9 @@
     hud.lockBackground = YES;
     hud.dimBackground = YES;
     hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:0.5 completion:nil];
+    hud.mode = AXPracticalHUDModeIndeterminate;
+    hud.tintColor = [UIColor whiteColor];
+    [hud hide:YES afterDelay:2 completion:nil];
     
     [pickerView enumerateAssetsGroupCompletion:nil];
     if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
