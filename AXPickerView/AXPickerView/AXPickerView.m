@@ -431,6 +431,14 @@
     [self setNeedsDisplay];
 }
 
+- (void)setToolsInsets:(UIEdgeInsets)toolsInsets {
+    _toolsInsets = toolsInsets;
+    if (_style == AXPickerViewStyleDatePicker
+     || _style == AXPickerViewStyleCommonPicker) {
+        [self configureTools];
+    }
+}
+
 - (void)setDelegate:(id<AXPickerViewDelegate>)delegate {
     _delegate = delegate;
     if (_style == AXPickerViewStyleCommonPicker) {
@@ -901,12 +909,22 @@
         case AXPickerViewStyleCommonPicker:
         {
             CGSize size = CGSizeMake(kAXPickerToolBarHeight, kAXPickerToolBarHeight);
-            self.cancelBtn.frame = CGRectMake(0.f, 0.f, size.width, size.height);
+            BOOL iOS11_0_available = [[UIDevice currentDevice].systemVersion compare:@"11.0" options:NSNumericSearch] != NSOrderedAscending;
+            [self.cancelBtn sizeToFit];
+            [self.completeBtn sizeToFit];
+            CGFloat widthOfCancel = MAX(size.width, CGRectGetWidth(_cancelBtn.bounds));
+            CGFloat widthOfComplete = MAX(size.width, CGRectGetWidth(_completeBtn.bounds));
+            if (iOS11_0_available) {
+                self.cancelBtn.frame = CGRectMake(_toolsInsets.left + self.safeAreaInsets.left, 0.f, widthOfCancel, size.height);
+                self.completeBtn.frame = CGRectMake(self.bounds.size.width - widthOfComplete - (_toolsInsets.right + self.safeAreaInsets.right), 0.f, widthOfComplete, size.height);
+            } else {
+                self.cancelBtn.frame = CGRectMake(_toolsInsets.left, 0.f, MAX(size.width, _cancelBtn.bounds.size.width), size.height);
+                self.completeBtn.frame = CGRectMake(self.bounds.size.width - widthOfComplete - _toolsInsets.right, 0.f, widthOfComplete, size.height);
+            }
             _cancelBtn.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-            self.completeBtn.frame = CGRectMake(self.bounds.size.width - size.width, 0.f, size.width, size.height);
             _completeBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
-            rect.size.width = self.bounds.size.width - kAXPickerToolBarHeight * 2.0;
-            rect.origin.x = (self.bounds.size.width - rect.size.width) / 2;
+            rect.size.width = _completeBtn.frame.origin.x - CGRectGetMaxX(_cancelBtn.frame);
+            rect.origin.x = CGRectGetMaxX(_cancelBtn.frame);
         }
             break;
         default:
@@ -934,6 +952,8 @@
 }
 
 - (void)resizingCustomView {
+    // Reconfigure tools.
+    [self configureTools];
     if (![_customView isKindOfClass:[UILabel class]]) return;
     UILabel *label = (UILabel *)_customView;
     CGSize usedSize = [label.text boundingRectWithSize:CGSizeMake(self.bounds.size.width-_customViewInsets.left-_customViewInsets.right, CGFLOAT_MAX)

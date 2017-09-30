@@ -105,6 +105,8 @@ NS_CLASS_AVAILABLE_IOS(7_0)
 @property(assign, nonatomic) UIEdgeInsets separatorInsets UI_APPEARANCE_SELECTOR;
 /// Insets of custom view
 @property(assign, nonatomic) UIEdgeInsets customViewInsets UI_APPEARANCE_SELECTOR;
+/// Insets of tools bar views. Default using .zero.
+@property(assign, nonatomic) UIEdgeInsets toolsInsets UI_APPEARANCE_SELECTOR;
 /// Should scale background view
 @property(assign, nonatomic) BOOL scaleBackgroundView UI_APPEARANCE_SELECTOR __deprecated;
 /// Delegate conforms to AXPikcerViewDelegate
