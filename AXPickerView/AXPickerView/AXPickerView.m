@@ -324,6 +324,11 @@
     }
 }
 
+- (void)safeAreaInsetsDidChange {
+    [super safeAreaInsetsDidChange];
+    [self configureTools];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"frame"]) {
         CGRect rect = [[change objectForKey:NSKeyValueChangeNewKey] CGRectValue];
@@ -899,6 +904,10 @@
             if (_customView) {
                 originY += _customView.bounds.size.height + _customViewInsets.top + _customViewInsets.bottom;
             }
+            if (@available(iOS 11.0, *)) {
+                size.height += self.safeAreaInsets.bottom;
+                [self.cancelBtn setContentEdgeInsets:UIEdgeInsetsMake(0, 0, self.safeAreaInsets.bottom, 0)];
+            }
             self.cancelBtn.frame = CGRectMake(0.f, originY, size.width, size.height);
             _cancelBtn.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
             rect.origin.x = 0.f;
@@ -909,12 +918,11 @@
         case AXPickerViewStyleCommonPicker:
         {
             CGSize size = CGSizeMake(kAXPickerToolBarHeight, kAXPickerToolBarHeight);
-            BOOL iOS11_0_available = [[UIDevice currentDevice].systemVersion compare:@"11.0" options:NSNumericSearch] != NSOrderedAscending;
             [self.cancelBtn sizeToFit];
             [self.completeBtn sizeToFit];
             CGFloat widthOfCancel = MAX(size.width, CGRectGetWidth(_cancelBtn.bounds));
             CGFloat widthOfComplete = MAX(size.width, CGRectGetWidth(_completeBtn.bounds));
-            if (iOS11_0_available) {
+            if (@available(iOS 11.0, *)) {
                 self.cancelBtn.frame = CGRectMake(_toolsInsets.left + self.safeAreaInsets.left, 0.f, widthOfCancel, size.height);
                 self.completeBtn.frame = CGRectMake(self.bounds.size.width - widthOfComplete - (_toolsInsets.right + self.safeAreaInsets.right), 0.f, widthOfComplete, size.height);
             } else {
